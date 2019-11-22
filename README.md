@@ -10,7 +10,7 @@ scripts: contains all the srcipts for dataset creation and analyses
 
 spatial: contains spatial data
 
-results: conatins result figures and tables 
+results: contains result figures and tables 
 
 # Documentation
 Each folder contains a 'readme.md' file. Please describe each file consistently!
