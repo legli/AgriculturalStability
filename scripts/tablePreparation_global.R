@@ -4,32 +4,31 @@ library(tidyr)
 library(vegan)
 
 ################ DATA PREPARATION
-dfCropland <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Cropland/cropland.csv")
+
+#### cropland data
+dfCropland <- read.csv("datasets/cropland_global.csv")
 sort(as.character(unique(dfCropland$Area)))
 head(dfCropland)
 
-
-ctryMap <- readOGR("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Spatial/countriesGlobalFinalDiss.shp")
+# harmonize cropland with spatial data 
+ctryMap <- readOGR("spatial/countries_global.shp")
 plot(ctryMap)
-#### go to arcgis and intersect with polygonClimateID (Data/DataPreparation folder), project to WGS_1984_World_Mercator and calculate area in ha ("area" field (float))
-
-
 sort(as.character(setdiff(dfCropland$Area,ctryMap@data$Area)))
 
-
 levels(dfCropland$Area) <- c(levels(dfCropland$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
-                                                      "Swaziland","Ethiopia","Netherlands Antilles",
+                                                      "Swaziland","Ethiopia","Burma","Netherlands Antilles",
                                                       "Korea, Republic of","Reunion","Russia","Saint Helena","United States","Venezuela")
 
 dfCropland[which(dfCropland$Area=="Bolivia (Plurinational State of)"),"Area"] <- "Bolivia"
-dfCropland[which(dfCropland$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
+dfCropland[which(dfCropland$Area=="CÃ´te d'Ivoire"|dfCropland$Area=="Côte d'Ivoire"|dfCropland$Area=="C?te d'Ivoire"),"Area"] <- "Cote d'Ivoire"
 dfCropland[which(dfCropland$Area=="Czechia"),"Area"] <- "Czech Republic"
 dfCropland[which(dfCropland$Area=="Democratic People's Republic of Korea"),"Area"] <- "Korea, Democratic People's Republic of"
 dfCropland[which(dfCropland$Area=="Eswatini"),"Area"] <- "Swaziland"
 dfCropland[which(dfCropland$Area=="Ethiopia PDR"),"Area"] <- "Ethiopia"
+dfCropland[which(dfCropland$Area=="Myanmar"),"Area"] <- "Burma"
 dfCropland[which(dfCropland$Area=="Netherlands Antilles (former)"),"Area"] <- "Netherlands Antilles"
 dfCropland[which(dfCropland$Area=="Republic of Korea"),"Area"] <- "Korea, Republic of"
-dfCropland[which(dfCropland$Area=="Réunion"),"Area"] <- "Reunion"
+dfCropland[which(dfCropland$Area=="R?union"|dfCropland$Area=="Réunion"|dfCropland$Area=="RÃ©union"),"Area"] <- "Reunion"
 dfCropland[which(dfCropland$Area=="Russian Federation"),"Area"] <- "Russia"
 dfCropland[which(dfCropland$Area=="Saint Helena, Ascension and Tristan da Cunha"),"Area"] <- "Saint Helena"
 dfCropland[which(dfCropland$Area=="United States of America"),"Area"] <- "United States"
@@ -39,20 +38,18 @@ sort(as.character(setdiff(dfCropland$Area,ctryMap@data$Area)))
 
 dfCropland <- dfCropland[which(dfCropland$Area%in%ctryMap@data$Area),]
 dfCropland <- dfCropland[,c("Area","Year","Value")]
-dfCropland$croplandArea <- dfCropland$Value*1000
+dfCropland$croplandArea <- dfCropland$Value*1000 # convert to ha
 dfCropland <- dfCropland[,c("Area","Year","croplandArea")]
 nrow(unique(dfCropland[,c("Area","Year")])) == nrow(dfCropland) # check duplicates
 ## this is the target file
 
 
 
+#### agricultural production data
 
-########## extract production data
-
-#### read agricultural production file
-dfProductionFull <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Production/ProductionCrops.csv")
+## read agricultural production file
+dfProductionFull <- read.csv("datasets/agriculturalProduction_global.csv")
 names(dfProductionFull)
-
 
 ## production data
 names(dfProductionFull)
@@ -60,7 +57,7 @@ dfProductionFull <- dfProductionFull[which(dfProductionFull$Element=="Area harve
 head(dfProductionFull)
 names(dfProductionFull)[4:53] <- 1968:2017
 
-# dfProductionFull <- dfProductionFull[which(dfProductionFull$Area=="Ethiopia"&dfProductionFull$Item=="Anise, badian, fennel, coriander"),]
+## change dataset structure
 dfProductionFullr <- dfProductionFull %>% gather(Year, Value, "1968":"2017")
 head(dfProductionFullr)
 dfProductionFullr$Year <- as.numeric(dfProductionFullr$Year)
@@ -69,9 +66,9 @@ head(dfProductionFullr)
 names(dfProductionFullr)[4] <- "AreaHarvested"
 
 
-#### make crops consistent (correct crop name -> group 2)
-dfConsistency <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/CropCalories/cropsConsistency.csv")
-head(dfConsistency)
+#### add nutrients and make crops consistent with target crop file
+dfConsistency <- read.csv("datasets/targetCrops_global.csv")
+head(dfConsistency) # Group2 is the target name
 
 dfConsistency <- dfConsistency[which(!is.na(dfConsistency$Group2)&!is.na(dfConsistency$Calories)),]
 setdiff(sort(unique(dfConsistency[which(!is.na(dfConsistency$harvestedAreaFAO)),"harvestedAreaFAO"])),sort(unique(dfProductionFull$Item)))
@@ -92,29 +89,25 @@ dfProductionFullr[which(is.na(dfProductionFullr$AreaHarvested)),"Production"] <-
 # set production to 0 where area is reported
 dfProductionFullr[which(dfProductionFullr$AreaHarvested> 0 & is.na(dfProductionFullr$Production)),"Production"] <- 0
 
-## make countries consistent
+# subset NA
+dfProductionFullr <- na.omit(dfProductionFullr)
+
+## harmonize country names
 sort(as.character(setdiff(dfProductionFullr$Area,dfCropland$Area)))
-
-#### subset NAs of Ethiopia outside time of establisehment
-sort(unique(dfProductionFullr[which(dfProductionFullr$Area=="Ethiopia PDR"&!is.na(dfProductionFullr$AreaHarvested)),"Year"]))
-sort(unique(dfProductionFullr[which(dfProductionFullr$Area=="Ethiopia"&!is.na(dfProductionFullr$AreaHarvested)),"Year"]))
-dfProductionFullr <- dfProductionFullr[-which(dfProductionFullr$Area=="Ethiopia PDR"&dfProductionFullr$Year>1992),]
-dfProductionFullr <- dfProductionFullr[-which(dfProductionFullr$Area=="Ethiopia"&dfProductionFullr$Year<1993),]
-
 
 levels(dfProductionFullr$Area) <- c(levels(dfProductionFullr$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
                              "Swaziland","Ethiopia","Burma",
                              "Korea, Republic of","Reunion","Russia","North Macedonia","United States","Venezuela")
 # micronesia is not everywhere present
 dfProductionFullr[which(dfProductionFullr$Area=="Bolivia (Plurinational State of)"),"Area"] <- "Bolivia"
-dfProductionFullr[which(dfProductionFullr$Area=="C�te d'Ivoire"),"Area"] <- "Cote d'Ivoire"
+dfProductionFullr[which(dfProductionFullr$Area=="CÃ´te d'Ivoire"|dfProductionFullr$Area=="C?te d'Ivoire"|dfProductionFullr$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
 dfProductionFullr[which(dfProductionFullr$Area=="Czechia"),"Area"] <- "Czech Republic"
 dfProductionFullr[which(dfProductionFullr$Area=="Democratic People's Republic of Korea"),"Area"] <- "Korea, Democratic People's Republic of"
 dfProductionFullr[which(dfProductionFullr$Area=="Eswatini"),"Area"] <- "Swaziland"
 dfProductionFullr[which(dfProductionFullr$Area=="Ethiopia PDR"),"Area"] <- "Ethiopia"
 dfProductionFullr[which(dfProductionFullr$Area=="Myanmar"),"Area"] <- "Burma"
 dfProductionFullr[which(dfProductionFullr$Area=="Republic of Korea"),"Area"] <- "Korea, Republic of"
-dfProductionFullr[which(dfProductionFullr$Area=="R�union"),"Area"] <- "Reunion"
+dfProductionFullr[which(dfProductionFullr$Area=="R?union"|dfProductionFullr$Area=="Réunion"|dfProductionFullr$Area=="RÃ©union"),"Area"] <- "Reunion"
 dfProductionFullr[which(dfProductionFullr$Area=="Russian Federation"),"Area"] <- "Russia"
 dfProductionFullr[which(dfProductionFullr$Area=="The former Yugoslav Republic of Macedonia"),"Area"] <- "North Macedonia"
 dfProductionFullr[which(dfProductionFullr$Area=="United States of America"),"Area"] <- "United States"
@@ -125,8 +118,7 @@ nrow(unique(dfProductionFullr[,c("Area","Year","Group2")])) == nrow(dfProduction
 unique(dfProductionFullr[which(duplicated(dfProductionFullr[,c("Area","Year","Group2")])),"Area"])
 
 
-## reduce dataset: only include crops with at least 15 entries per region, remove 0 at the beginning and end of time series!; maximize  number of crops and years per time period
-
+## reduce dataset: only include crops with at least 15 entries per region, remove 0 at the beginning and end of time series!; maximize  number of crops and years per time window
 # iterate through countries
 vecCountry <- unique(dfProductionFullr$Area)
 lsProductionFull <- lapply(vecCountry,function(ctry){
@@ -136,7 +128,7 @@ lsProductionFull <- lapply(vecCountry,function(ctry){
 
   ## iterate through crops
   lsCrops <- lapply(unique(dfCountry$Group2),function(c){
-    dfCrop <- dfCountry[which(dfCountry$Group2==c),]
+    dfCrop <- merge(data.frame(Year=1968:2017,Area=ctry,Group2=c),dfCountry[which(dfCountry$Group2==c),],all.x=T) # crate full data frame
     # only consider crops with at least 15 data points for detrending
     if (sum(!is.na(dfCrop$Production))>=15&sum(dfCrop$Production>0,na.rm=T)>0){
       minYear <- min(dfCrop[which(dfCrop$Production>0),"Year"])
@@ -190,9 +182,6 @@ dfProductionFull_Final <- do.call(rbind,lsProductionFull)
 head(dfProductionFull_Final)
 sum(is.na(dfProductionFull_Final$AreaHarvested))
 sum(is.na(dfProductionFull_Final$Production))
-# set NA areas to 0 (this is where we have 0 production within detrend window)
-dfProductionFull_Final[which(is.na(dfProductionFull_Final$AreaHarvested)),"AreaHarvested"] <- 0
-
 
 # check if any aggregation on new group is required
 nrow(unique(dfProductionFull_Final[,c("Area","Group2","Year")])) == nrow(dfProductionFull_Final)
@@ -223,14 +212,12 @@ nrow(dfShannon)==nrow(dfProductionCaloriesFinal)
 nrow(unique(dfShannon[,c("Area","Year")])) == nrow(dfShannon) # check duplicates
 
 
+################### Other Predictors
 
-
-################### Predictors
-
-## Fertilizer
-dfFertilizerArchive <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Fertilizer/FertilizerNutrient_archiveData.csv")
+#### Fertilizer
+dfFertilizerArchive <- read.csv("datasets/fertilizerArchive_global.csv")
 names(dfFertilizerArchive)[4] <- "Area"
-dfFertilizerNew <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Fertilizer/FertilizerNutrient_newData.csv")
+dfFertilizerNew <- read.csv("datasets/fertilizerNew_global.csv")
 dfFertilizer <- rbind(dfFertilizerArchive[,c("Area","Year","Item","Value")],dfFertilizerNew[,c("Area","Year","Item","Value")])
 dfFertilizer <- dfFertilizer[which(dfFertilizer$Item=="Nitrogenous fertilizers"| dfFertilizer$Item=="Nutrient nitrogen N (total)"),]
 dfFertilizer <- dfFertilizer[,c("Area","Year","Value")]
@@ -244,14 +231,14 @@ levels(dfFertilizer$Area) <- c(levels(dfFertilizer$Area),"Bolivia","Cote d'Ivoir
                              "Reunion","Korea, Republic of","Russia","North Macedonia","United States","Venezuela")
 
 dfFertilizer[which(dfFertilizer$Area=="Bolivia (Plurinational State of)"),"Area"] <- "Bolivia"
-dfFertilizer[which(dfFertilizer$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
+dfFertilizer[which(dfFertilizer$Area=="CÃ´te d'Ivoire"|dfFertilizer$Area=="C?te d'Ivoire"|dfFertilizer$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
 dfFertilizer[which(dfFertilizer$Area=="Czechia"),"Area"] <- "Czech Republic"
 dfFertilizer[which(dfFertilizer$Area=="Democratic People's Republic of Korea"),"Area"] <- "Korea, Democratic People's Republic of"
 dfFertilizer[which(dfFertilizer$Area=="Eswatini"),"Area"] <- "Swaziland"
 dfFertilizer[which(dfFertilizer$Area=="Ethiopia PDR"),"Area"] <- "Ethiopia"
 dfFertilizer[which(dfFertilizer$Area=="Myanmar"),"Area"] <- "Burma"
 dfFertilizer[which(dfFertilizer$Area=="Netherlands Antilles (former)"),"Area"] <- "Netherlands Antilles"
-dfFertilizer[which(dfFertilizer$Area=="Réunion"),"Area"] <- "Reunion"
+dfFertilizer[which(dfFertilizer$Area=="R?union"|dfFertilizer$Area=="Réunion"|dfFertilizer$Area=="RÃ©union"),"Area"] <- "Reunion"
 dfFertilizer[which(dfFertilizer$Area=="Republic of Korea"),"Area"] <- "Korea, Republic of"
 dfFertilizer[which(dfFertilizer$Area=="Russian Federation"),"Area"] <- "Russia"
 dfFertilizer[which(dfFertilizer$Area=="The former Yugoslav Republic of Macedonia"),"Area"] <- "North Macedonia"
@@ -264,20 +251,20 @@ nrow(unique(dfFertilizer[,c("Area","Year")])) == nrow(dfFertilizer) # check dupl
 
 
 ## Irrigation
-dfIrrigation <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Irrigation/AreaEquippedIrrigation_agriculturalShare.csv")
+dfIrrigation <- read.csv("datasets/irrigationEquippedArea_global.csv")
 sort(as.character(setdiff(dfIrrigation$Area,dfCropland$Area)))
 
 levels(dfIrrigation$Area) <- c(levels(dfIrrigation$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
                                "Swaziland","Ethiopia","Burma","Reunion","Korea, Republic of","Russia","United States","Venezuela")
 
 dfIrrigation[which(dfIrrigation$Area=="Bolivia (Plurinational State of)"),"Area"] <- "Bolivia"
-dfIrrigation[which(dfIrrigation$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
+dfIrrigation[which(dfIrrigation$Area=="CÃ´te d'Ivoire"|dfIrrigation$Area=="C?te d'Ivoire"|dfIrrigation$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
 dfIrrigation[which(dfIrrigation$Area=="Czechia"),"Area"] <- "Czech Republic"
 dfIrrigation[which(dfIrrigation$Area=="Democratic People's Republic of Korea"),"Area"] <- "Korea, Democratic People's Republic of"
 dfIrrigation[which(dfIrrigation$Area=="Eswatini"),"Area"] <- "Swaziland"
 dfIrrigation[which(dfIrrigation$Area=="Ethiopia PDR"),"Area"] <- "Ethiopia"
 dfIrrigation[which(dfIrrigation$Area=="Myanmar"),"Area"] <- "Burma"
-dfIrrigation[which(dfIrrigation$Area=="Réunion"),"Area"] <- "Reunion"
+dfIrrigation[which(dfIrrigation$Area=="R?union"|dfIrrigation$Area=="Réunion"|dfIrrigation$Area=="RÃ©union"),"Area"] <- "Reunion"
 dfIrrigation[which(dfIrrigation$Area=="Republic of Korea"),"Area"] <- "Korea, Republic of"
 dfIrrigation[which(dfIrrigation$Area=="Russian Federation"),"Area"] <- "Russia"
 dfIrrigation[which(dfIrrigation$Area=="United States of America"),"Area"] <- "United States"
@@ -290,7 +277,7 @@ nrow(unique(dfIrrigation[,c("Area","Year")])) == nrow(dfIrrigation) # check dupl
 
 
 ###### Warfare
-dfWarfare <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Warfare/ACTOTAL.csv")
+dfWarfare <- read.csv("datasets/warfare_global.csv")
 names(dfWarfare)[3] <- "Area"
 
 dfWarfare <- na.omit(dfWarfare) # remove NA
@@ -314,9 +301,6 @@ dfYemenT$ACTOTAL <- rowSums(dfYemenT[,c("ACTOTAL.x","ACTOTAL.y")],na.rm=T)
 dfWarfare <- rbind(dfWarfare,dfYemenT[,c(1:4,7)])
 
 sort(as.character(setdiff(dfWarfare$Area,dfCropland$Area)))
-
-levels(dfIrrigation$Area) <- c(levels(dfIrrigation$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
-                               "Swaziland","Ethiopia","Burma","Reunion","Korea, Republic of","Russia","United States","Venezuela")
 
 ## warfare
 levels(dfWarfare$Area) <- c(levels(dfWarfare$Area),"Iran (Islamic Republic of)","Korea, Democratic People's Republic of","Korea, Republic of",
@@ -343,7 +327,7 @@ hist(dfWarfare$warfare)
 
 ###### climate
 # intersect file
-shpClimateID <- readOGR("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/Spatial/finalRegion","intersectRegionsClimateID_proj")
+shpClimateID <- readOGR("spatial","countriesClimateID_global")
 head(shpClimateID@data)
 dfClimateID <- shpClimateID@data
 dfClimateIDsum <- aggregate(areaHA~cellID,dfClimateID,function(i){sum(i,na.rm=T)})
@@ -352,7 +336,7 @@ dfClimateID <- merge(dfClimateID,dfClimateIDsum,by="cellID")
 head(dfClimateID)
 
 # climate file
-load("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Data/DataPreparation/dfClimateFinal_Oct2019.RData")
+load("datasetsDerived/climate_global.RData")
 names(dfClimateFinalPrint)
 head(dfClimateFinalPrint)
 dfClimateFinal <- dfClimateFinalPrint[,c(1,16:114)]
@@ -403,11 +387,11 @@ nrow(dfClimateFinalr)
 nrow(unique(dfClimateFinalr[,c("Area","Year")])) == nrow(dfClimateFinalr) # check duplicates
 
 
-#### combine all datasets
+#### calculate all variables for the 5 time periods
 
 vecCountryFinal <- Reduce(intersect,list(dfYieldCalories$Area,dfProductionFull_Final$Area,dfShannon$Area,dfCropland$Area,dfFertilizer$Area,dfIrrigation$Area,dfClimateFinalr$Area,dfWarfare$Area))
 lsAll <- lapply(vecCountryFinal,function(ctry){
-  # total production
+  # detrend yields
   show(as.character(ctry))
   dfYieldCtry <- dfYieldCalories[which(dfYieldCalories$Area==ctry),]
   show(nrow(dfYieldCtry)>=15) 
@@ -476,14 +460,14 @@ length(unique(dfAll$Area)) ## 148 countries
  
  
 ## add world regions
-dfCountryCodes <- read.csv("C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/WorlBankRegions/WorldBankIncomeGroups.csv")
+dfCountryCodes <- read.csv("datasets/incomeGroups_global.csv")
 names(dfCountryCodes)
 unique(dfCountryCodes$Income.group)
 
 missing <- unique(dfAll[-which(dfAll$Area%in%dfCountryCodes$Economy),"Area"])
 levels(dfCountryCodes$Economy) <- c(levels(dfCountryCodes$Economy),as.character(missing))
 sort(as.character(dfCountryCodes$Economy))
-dfCountryCodes[which(dfCountryCodes$Economy=="C�te d'Ivoire"),"Economy"] <- "Cote d'Ivoire"
+dfCountryCodes[which(dfCountryCodes$Economy=="CÃ´te d'Ivoire"|dfCountryCodes$Economy=="C?te d'Ivoire"|dfCountryCodes$Economy=="Côte d'Ivoire"),"Economy"] <- "Cote d'Ivoire"
 dfCountryCodes[which(dfCountryCodes$Economy=="Egypt, Arab Rep."),"Economy"] <- "Egypt"
 dfCountryCodes[which(dfCountryCodes$Economy=="Gambia, The"),"Economy"] <- "Gambia"
 dfCountryCodes[which(dfCountryCodes$Economy=="Iran, Islamic Rep."),"Economy"] <- "Iran (Islamic Republic of)"
@@ -491,6 +475,7 @@ dfCountryCodes[which(dfCountryCodes$Economy=="Korea, Dem. People's Rep."),"Econo
 dfCountryCodes[which(dfCountryCodes$Economy=="Korea, Rep."),"Economy"] <- "Korea, Republic of"
 dfCountryCodes[which(dfCountryCodes$Economy=="Kyrgyz Republic"),"Economy"] <- "Kyrgyzstan"
 dfCountryCodes[which(dfCountryCodes$Economy=="Lao PDR"),"Economy"] <- "Lao People's Democratic Republic"
+dfCountryCodes[which(dfCountryCodes$Economy=="Myanmar"),"Economy"] <- "Burma"
 dfCountryCodes[which(dfCountryCodes$Economy=="Moldova"),"Economy"] <- "Republic of Moldova"
 dfCountryCodes[which(dfCountryCodes$Economy=="Russian Federation"),"Economy"] <- "Russia"
 dfCountryCodes[which(dfCountryCodes$Economy=="Slovak Republic"),"Economy"] <- "Slovakia"
@@ -507,9 +492,7 @@ names(dfAll)[3] <- "IncomeGroup"
 
 
 ## save dataframe
-write.csv(dfAll, "C:/Users/egli/Nextcloud/Cloud/PhD_Leipzig/Publications/StabilityAgriculturalSystemsScales/Global/Data/TablePreparation/tableResponsePredictorsGlobal_Nov2019_v2.csv",row.names=F)
-
-
+write.csv(dfAll, "datasetsDerived/dataFinal_global.csv",row.names=F)
 
 
 
