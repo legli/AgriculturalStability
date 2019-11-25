@@ -34,14 +34,14 @@ dfCropland[which(dfCropland$Area=="Saint Helena, Ascension and Tristan da Cunha"
 dfCropland[which(dfCropland$Area=="United States of America"),"Area"] <- "United States"
 dfCropland[which(dfCropland$Area=="Venezuela (Bolivarian Republic of)"),"Area"] <- "Venezuela"
 
-sort(as.character(setdiff(dfCropland$Area,ctryMap@data$Area)))
+sort(as.character(setdiff(dfCropland$Area,ctryMap@data$Area))) 
 
-dfCropland <- dfCropland[which(dfCropland$Area%in%ctryMap@data$Area),]
+dfCropland <- dfCropland[which(dfCropland$Area%in%ctryMap@data$Area),] # only keep current countries
 dfCropland <- dfCropland[,c("Area","Year","Value")]
 dfCropland$croplandArea <- dfCropland$Value*1000 # convert to ha
 dfCropland <- dfCropland[,c("Area","Year","croplandArea")]
 nrow(unique(dfCropland[,c("Area","Year")])) == nrow(dfCropland) # check duplicates
-## this is the target file
+## this are the target regions
 
 
 
@@ -55,7 +55,7 @@ names(dfProductionFull)
 names(dfProductionFull)
 dfProductionFull <- dfProductionFull[which(dfProductionFull$Element=="Area harvested" | dfProductionFull$Element == "Production"),c(2,4,6,15:64)]
 head(dfProductionFull)
-names(dfProductionFull)[4:53] <- 1968:2017
+names(dfProductionFull)[4:53] <- 1968:2017 # change colnames to years
 
 ## change dataset structure
 dfProductionFullr <- dfProductionFull %>% gather(Year, Value, "1968":"2017")
@@ -66,9 +66,9 @@ head(dfProductionFullr)
 names(dfProductionFullr)[4] <- "AreaHarvested"
 
 
-#### add nutrients and make crops consistent with target crop file
+#### add calories and make crops consistent with target crop file
 dfConsistency <- read.csv("datasets/targetCrops_global.csv")
-head(dfConsistency) # Group2 is the target name
+head(dfConsistency) # Group2 is the target crop name
 
 dfConsistency <- dfConsistency[which(!is.na(dfConsistency$Group2)&!is.na(dfConsistency$Calories)),]
 setdiff(sort(unique(dfConsistency[which(!is.na(dfConsistency$harvestedAreaFAO)),"harvestedAreaFAO"])),sort(unique(dfProductionFull$Item)))
@@ -98,7 +98,7 @@ sort(as.character(setdiff(dfProductionFullr$Area,dfCropland$Area)))
 levels(dfProductionFullr$Area) <- c(levels(dfProductionFullr$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
                              "Swaziland","Ethiopia","Burma",
                              "Korea, Republic of","Reunion","Russia","North Macedonia","United States","Venezuela")
-# micronesia is not everywhere present
+
 dfProductionFullr[which(dfProductionFullr$Area=="Bolivia (Plurinational State of)"),"Area"] <- "Bolivia"
 dfProductionFullr[which(dfProductionFullr$Area=="CÃ´te d'Ivoire"|dfProductionFullr$Area=="C?te d'Ivoire"|dfProductionFullr$Area=="Côte d'Ivoire"),"Area"] <- "Cote d'Ivoire"
 dfProductionFullr[which(dfProductionFullr$Area=="Czechia"),"Area"] <- "Czech Republic"
@@ -136,11 +136,10 @@ lsProductionFull <- lapply(vecCountry,function(ctry){
       dfCrop[which(dfCrop$Year<minYear),c("AreaHarvested","Production")] <- NA
       dfCrop[which(dfCrop$Year>maxYear),c("AreaHarvested","Production")] <- NA
       dfCrop[which(dfCrop$Year>minYear&is.na(dfCrop$Production)&dfCrop$time<maxYear),"Production"] <- 0
-      # detrend production
+      # detrend crop-specific production
       if (sum(!is.na(dfCrop$Production))>=15){
         dfCrop$ProductionDet <- NA
         dfCrop[which(!is.na(dfCrop$Production)),"ProductionDet"] <-resid(loess(Production ~ Year,data= dfCrop))
-        # dfCrop[which(!is.na(dfCrop$Production)),]
         dfCrop
       }
     }
@@ -151,19 +150,17 @@ lsProductionFull <- lapply(vecCountry,function(ctry){
     lsWindow <- lapply(seq(1968,2008,10),function(yearStart){
     ## keep maximum number of crops if at least 5 years are covered
     # moving window 
-    lsWidth <- lapply(5:10,function(w){
-      # show(w)
+    lsWidth <- lapply(5:10,function(w){ # w = width of time window (>=5)
       dfCropsR <- dfCrops[which(dfCrops$Year>=yearStart&dfCrops$Year<=(yearStart+9)),c("Year","Group2","Production")] %>% spread(Year,Production)
       by <- 10-(w-1)
-      lsPos <- lapply(1:by,function(p){
-        # show(p)
+      lsPos <- lapply(1:by,function(p){ # iterate through all possible windows by given width
         noCrop <- sum(apply(dfCropsR[,(1+p):(1+p+w-1)],1,function(r){sum(!is.na(r))==w}))
         data.frame(width = w, year = (yearStart+p-1), num = noCrop)
       })
       do.call(rbind,lsPos)
     })
     dfFreq <- do.call(rbind,lsWidth)
-    # get time window with maximum number of crops, then largest time periods and minimum starting years
+    # get time window with maximum number of crops, then largest time period and minimum starting year
     maxN <- max(dfFreq$num)
     maxW <- max(dfFreq[which(dfFreq$num==maxN),"width"])
     minYear <- min(dfFreq[which(dfFreq$num==maxN&dfFreq$width==maxW),"year"])
@@ -183,17 +180,16 @@ head(dfProductionFull_Final)
 sum(is.na(dfProductionFull_Final$AreaHarvested))
 sum(is.na(dfProductionFull_Final$Production))
 
-# check if any aggregation on new group is required
-nrow(unique(dfProductionFull_Final[,c("Area","Group2","Year")])) == nrow(dfProductionFull_Final)
+# check number of unique crops
 length(unique(dfProductionFull_Final$Group2)) ## 129 crops
 
 #### calculate total production per country and year
-dfProductionCaloriesFinal <- aggregate(Production~Area + Year,dfProductionFull_Final,sum)
+dfProductionCaloriesFinal <- aggregate(Production~Area+Year,dfProductionFull_Final,sum)
 head(dfProductionCaloriesFinal)
 nrow(dfProductionCaloriesFinal)==nrow(unique(dfProductionFull_Final[,c("Area","Year")]))
 
 #### calculate total area per country and year
-dfHarvestedAreaFinal <- aggregate(AreaHarvested~ Area  + Year,dfProductionFull_Final,sum)
+dfHarvestedAreaFinal <- aggregate(AreaHarvested~Area+Year,dfProductionFull_Final,sum)
 head(dfHarvestedAreaFinal)
 nrow(dfHarvestedAreaFinal)==nrow(dfProductionCaloriesFinal)
 
@@ -204,8 +200,8 @@ dfYieldCalories$Yield <- dfYieldCalories$Production/dfYieldCalories$AreaHarveste
 dfYieldCalories <- dfYieldCalories[,c("Area","Year","Yield")]
 nrow(unique(dfYieldCalories[,c("Area","Year")])) == nrow(dfYieldCalories) # check duplicates
 
-#### calculate shannon
-dfShannon <- aggregate(AreaHarvested~ Area  + Year,dfProductionFull_Final,function(x){exp(diversity(x,index="shannon"))})
+#### calculate effective diversity (exp of shannon)
+dfShannon <- aggregate(AreaHarvested~Area+Year,dfProductionFull_Final,function(x){exp(diversity(x,index="shannon"))})
 head(dfShannon)
 names(dfShannon)[3] <- "diversity"
 nrow(dfShannon)==nrow(dfProductionCaloriesFinal)
@@ -224,6 +220,8 @@ dfFertilizer <- dfFertilizer[,c("Area","Year","Value")]
 names(dfFertilizer)[3] <- "Nitrogen"
 head(dfFertilizer)
 
+
+# harmonzie country names
 sort(as.character(setdiff(dfFertilizer$Area,dfCropland$Area)))
 
 levels(dfFertilizer$Area) <- c(levels(dfFertilizer$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
@@ -252,8 +250,9 @@ nrow(unique(dfFertilizer[,c("Area","Year")])) == nrow(dfFertilizer) # check dupl
 
 ## Irrigation
 dfIrrigation <- read.csv("datasets/irrigationEquippedArea_global.csv")
-sort(as.character(setdiff(dfIrrigation$Area,dfCropland$Area)))
 
+# harmonzie country names
+sort(as.character(setdiff(dfIrrigation$Area,dfCropland$Area)))
 levels(dfIrrigation$Area) <- c(levels(dfIrrigation$Area),"Bolivia","Cote d'Ivoire","Czech Republic","Korea, Democratic People's Republic of",
                                "Swaziland","Ethiopia","Burma","Reunion","Korea, Republic of","Russia","United States","Venezuela")
 
@@ -281,11 +280,12 @@ dfWarfare <- read.csv("datasets/warfare_global.csv")
 names(dfWarfare)[3] <- "Area"
 
 dfWarfare <- na.omit(dfWarfare) # remove NA
-## add former divided Germany: always 0
+# add former divided Germany: always 0
 dfWarfare[which(dfWarfare$Area=="Germany")[1],]
 dfG <- data.frame(SCODE="GMY",CCODE = 255, Area="Germany",YEAR=1961:1990,ACTOTAL=0)
 dfWarfare <- rbind(dfWarfare,dfG)
 
+# combine north and south yemen
 dfWarfare[which(dfWarfare$Area=="Yemen")[1],]
 dfYemenN <- dfWarfare[which(dfWarfare$Area=="Yemen, North"),]
 dfYemenN$SCODE <- "YEM"
@@ -300,13 +300,12 @@ head(dfYemenT)
 dfYemenT$ACTOTAL <- rowSums(dfYemenT[,c("ACTOTAL.x","ACTOTAL.y")],na.rm=T)
 dfWarfare <- rbind(dfWarfare,dfYemenT[,c(1:4,7)])
 
+# harmonize country names
 sort(as.character(setdiff(dfWarfare$Area,dfCropland$Area)))
 
-## warfare
 levels(dfWarfare$Area) <- c(levels(dfWarfare$Area),"Iran (Islamic Republic of)","Korea, Democratic People's Republic of","Korea, Republic of",
                             "Lao People's Democratic Republic","North Macedonia","Republic of Moldova","Burma","Russia","Syrian Arab Republic",
                             "United Republic of Tanzania","Viet Nam")
-
 
 dfWarfare[which(dfWarfare$Area=="Iran"),"Area"] <-  "Iran (Islamic Republic of)"
 dfWarfare[which(dfWarfare$Area=="Korea North"),"Area"] <- "Korea, Democratic People's Republic of"
@@ -326,7 +325,7 @@ hist(dfWarfare$warfare)
 
 
 ###### climate
-# intersect file
+# intersect file (intersection of country borders and climate pixels)
 shpClimateID <- readOGR("spatial","countriesClimateID_global")
 head(shpClimateID@data)
 dfClimateID <- shpClimateID@data
@@ -352,7 +351,7 @@ names(dfCroplandTot)[2:6] <- paste0(names(dfCroplandTot)[2:6],"Tot")
 dfClimateFinalArea <- merge(dfClimateFinalArea,dfCroplandTot,by="Area")
 head(dfClimateFinalArea)
 names(dfClimateFinalArea)
-## weighted average: get are of cropland attributed to a cell segment (i.e. cropland area multiplied by area share of the segment), divide it by total cropland area across region
+## weighted average: get area of cropland attributed to a cell segment (i.e. cropland area multiplied by area share of the segment), divide it by total cropland area across region
 dfClimateFinalArea$weight1 <- (((dfClimateFinalArea$areaHA/dfClimateFinalArea$areaTot)*dfClimateFinalArea$cropland1970AD)/dfClimateFinalArea$cropland1970ADTot)
 dfClimateFinalArea$weight2 <- (((dfClimateFinalArea$areaHA/dfClimateFinalArea$areaTot)*dfClimateFinalArea$cropland1980AD)/dfClimateFinalArea$cropland1980ADTot)
 dfClimateFinalArea$weight3 <- (((dfClimateFinalArea$areaHA/dfClimateFinalArea$areaTot)*dfClimateFinalArea$cropland1990AD)/dfClimateFinalArea$cropland1990ADTot)
@@ -388,15 +387,14 @@ nrow(unique(dfClimateFinalr[,c("Area","Year")])) == nrow(dfClimateFinalr) # chec
 
 
 #### calculate all variables for the 5 time periods
-
 vecCountryFinal <- Reduce(intersect,list(dfYieldCalories$Area,dfProductionFull_Final$Area,dfShannon$Area,dfCropland$Area,dfFertilizer$Area,dfIrrigation$Area,dfClimateFinalr$Area,dfWarfare$Area))
 lsAll <- lapply(vecCountryFinal,function(ctry){
   # detrend yields
   show(as.character(ctry))
   dfYieldCtry <- dfYieldCalories[which(dfYieldCalories$Area==ctry),]
-  show(nrow(dfYieldCtry)>=15) 
   dfYieldCtry$YieldDet <- resid(loess(Yield ~ Year,data=dfYieldCtry))
   
+  # subset data for the target country
   dfProductionCtry <- dfProductionFull_Final[which(dfProductionFull_Final$Area==ctry),c("Area","Group2","Year","ProductionDet")]
   dfShannonCtry <- dfShannon[which(dfShannon$Area==ctry),]
   dfCroplandCtry <- dfCropland[which(dfCropland$Area==ctry),]
@@ -410,7 +408,7 @@ lsAll <- lapply(vecCountryFinal,function(ctry){
     dfSummary$stability <- mean(dfYieldCtry[which(dfYieldCtry$Year>=yearStart&dfYieldCtry$Year<=(yearStart+9)),"Yield"],na.rm=T)/sd(dfYieldCtry[which(dfYieldCtry$Year>=yearStart&dfYieldCtry$Year<=(yearStart+9)),"YieldDet"],na.rm=T)
     dfSummary$diversity <- mean(dfShannonCtry[which(dfShannonCtry$Year>=yearStart&dfShannonCtry$Year<=(yearStart+9)),"diversity"],na.rm=T)
     
-    # asynchrony (Code snipped from Mehrabi et al. 2019)
+    # asynchrony (Code snippet from Mehrabi & Ramankutty 2019, supplement p. 29)
     dfProductionCtryTime <- dfProductionCtry[which(dfProductionCtry$Year>=yearStart&dfProductionCtry$Year<=(yearStart+9)),]
     noCrop <- length(unique(dfProductionCtryTime$Group2))
     dfSummary$asynchrony <- NA
@@ -455,15 +453,16 @@ sum(is.na(dfAll))
 ## omit NA
 dfAll <- na.omit(dfAll)
 hist(dfAll$stability)
-length(unique(dfAll$Area)) ## 148 countries
+length(unique(dfAll$Area)) ## 149 countries
 
  
  
-## add world regions
+## add income groups
 dfCountryCodes <- read.csv("datasets/incomeGroups_global.csv")
 names(dfCountryCodes)
 unique(dfCountryCodes$Income.group)
 
+# harmonize country names
 missing <- unique(dfAll[-which(dfAll$Area%in%dfCountryCodes$Economy),"Area"])
 levels(dfCountryCodes$Economy) <- c(levels(dfCountryCodes$Economy),as.character(missing))
 sort(as.character(dfCountryCodes$Economy))

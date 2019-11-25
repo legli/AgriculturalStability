@@ -19,6 +19,10 @@ names(myColors) <- factor(lev,levels=lev)
 
 ## read DF
 dfGlobal <- read.csv("datasetsDerived/dataFinal_global.csv")
+# remove countries listed by Renard & Tilman 2019
+dfGlobal <- dfGlobal[-which(dfGlobal$Area%in%c("Korea, Democratic People's Republic of", "Guinea", "Kenya","Mozambique",
+                                               "Zambia","Ireland","New Zealand","Netherlands")),] # note that Ireland was not included anyway
+length(unique(dfGlobal$Area))
 names(dfGlobal)
 table(dfGlobal$IncomeGroup)
 
