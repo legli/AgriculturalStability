@@ -419,8 +419,8 @@ lsAll <- lapply(vecCountryFinal,function(ctry){
       diff.cov <- cov(data.frame(det.w.dec))
       diag.cov <- diag(diff.cov)
       sqrt.diag.cov <- sqrt(diag.cov)
-      diff.var.glob <-  sum(diff.cov,na.rm=T)
-      diff.sd.local <- sum(sqrt.diag.cov,na.rm=T)
+      diff.var.glob <-  sum(diff.cov)
+      diff.sd.local <- sum(sqrt.diag.cov)
       diff.async <- 1-diff.var.glob/(diff.sd.local^2) #asynchrony
       dfSummary$asynchrony <- diff.async
     }
