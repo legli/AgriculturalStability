@@ -1,192 +1,192 @@
-harvestedAreaFAO,Monfreda2008,Group1,Group2,Calories,Protein,Fat,Considerations1,Considerations2,Considerations3
-Agave fibres nes,agave,agave,agave,NA,NA,NA,,,
-NA,alfalfa,NA,NA,NA,NA,NA,,,
-"Almonds, with shell",almond,almond,almond,2360000,80000,209000,,,
-"Anise, badian, fennel, coriander",aniseetc,aniseetc,aniseetc,3450000,158000,149000,,,
-Apples,apple,apple,apple,480000,1000,3000,,,
-Apricots,apricot,apricot,apricot,450000,13000,4000,,,
-Areca nuts,areca,areca,areca,2450000,49000,44000,,,
-Artichokes,artichoke,artichoke,artichoke,200000,11000,1000,,,
-Asparagus,asparagus,asparagus,asparagus,120000,16000,1000,,,
-Avocados,avocado,avocado,avocado,1190000,15000,113000,,,
-Bambara beans,bambara,bambara,bambara,3650000,177000,63000,,,
-Bananas,banana,banana,banana,600000,7000,3000,,,
-Barley,barley,barley,barley,3320000,110000,18000,,,
-"Bastfibres, other",jutelikefiber,jutelikefiber,jutelikefiber,NA,NA,NA,,,
-"Beans, dry",bean,bean,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,
-"Beans, green",greenbean,bean,greenbean,500000,30000,4000,,,
-NA,beetfor,sugarbeet,sugarbeet,NA,NA,NA,Same species,,
-Berries nes,berrynes,berrynes,berrynes,NA,NA,NA,,,
-Blueberries,blueberry,blueberry,blueberry,550000,7000,4000,,,
-"Brazil nuts, with shell",brazil,brazil,brazil,3150000,69000,318000,,,
-"Broad beans, horse beans, dry",broadbean,broadbean,broadbean,230000,23000,1000,,,
-Buckwheat,buckwheat,buckwheat,buckwheat,3300000,110000,20000,,,
-Cabbages and other brassicas,cabbage,cabbage,cabbage,190000,10000,1000,,,
-NA,cabbagefor,cabbage,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,
-Canary seed,canaryseed,canaryseed,canaryseed,3880000,160000,60000,,,
-Carobs,carob,carob,carob,1110000,16000,5000,,,
-Carrots and turnips,carrot,carrot,carrot,380000,9000,2000,,,
-NA,carrotfor,carrot,NA,NA,NA,NA,Same species,Avoid double counting,
-"Cashew nuts, with shell",cashew,cashew,cashew,2520000,77000,206000,,,
-Cashewapple,cashewapple,cashew,NA,430000,8000,6000,Same species,Avoid double counting,
-Cassava,cassava,cassava,cassava,1090000,9000,2000,,,
-Cassava leaves,NA,cassava,NA,NA,NA,NA,Same species,Avoid double counting,
-Castor oil seed,castor,castor,castor,8840000,0,1000000,,,
-Cauliflowers and broccoli,cauliflower,cauliflower,cauliflower,90000,8000,1000,,,
-Cereals (Rice Milled Eqv),NA,NA,NA,NA,NA,NA,,,
-"Cereals, nes",cerealnes,cerealnes,cerealnes,3400000,80000,15000,,,
-"Cereals,Total",NA,NA,NA,NA,NA,NA,,,
-Cherries,cherry,cherry,cherry,650000,11000,9000,,,
-"Cherries, sour",sourcherry,sourcherry,sourcherry,450000,9000,3000,,,
-Chestnut,chestnut,chestnut,chestnut,1580000,18000,17000,,,
-Chick peas,chickpea,chickpea,chickpea,3580000,201000,45000,,,
-Chicory roots,chicory,chicory,chicory,600000,11000,2000,,,
-"Chillies and peppers, dry",chilleetc,chilleetc,NA,NA,NA,NA,Same species,Avoid double counting,
-"Chillies and peppers, green",pimento,chilleetc,pimento,250000,11000,3000,,,
-Cinnamon (canella),cinnamon,cinnamon,cinnamon,2610000,39000,32000,,,
-"Citrus Fruit,Total",NA,NA,NA,NA,NA,NA,,,
-Cloves,clove,clove,clove,3230000,60000,201000,,,
-NA,clover,NA,NA,NA,NA,NA,,,
-"Coarse Grain, Total",NA,NA,NA,NA,NA,NA,,,
-"Cocoa, beans",cocoa,cocoa,cocoa,4140000,40000,400000,,,
-Coconuts,coconut,coconut,coconut,1840000,17000,174000,,,
-"Coffee, green",coffee,coffee,coffee,470000,67000,0,,,
-NA,coir,coconut,NA,NA,NA,NA,Same species,Avoid double counting,
-"Cow peas, dry",cowpea,cowpea,cowpea,3420000,234000,18000,,,
-Cranberries,cranberry,cranberry,cranberry,470000,4000,2000,,,
-Cucumbers and gherkins,cucumberetc,cucumberetc,cucumberetc,130000,5000,1000,,,
-Currants,currant,currant,currant,590000,14000,3000,,,
-Dates,date,date,date,1560000,15000,4000,,,
-Eggplants (aubergines),eggplant,eggplant,eggplant,210000,9000,1000,,,
-Fibre crops nes,fibrenes,fibrenes,fibrenes,NA,NA,NA,,,
-Figs,fig,fig,fig,730000,8000,3000,,,
-Flax fibre and tow,flax,flax,flax,NA,NA,NA,,,
-Fonio,fonio,fonio,fonio,3380000,80000,30000,,,
-NA,fornes,NA,NA,NA,NA,NA,,,
-Fruit Primary,NA,NA,NA,NA,NA,NA,,,
-"Fruit, citrus nes",citrusnes,citrusnes,citrusnes,260000,5000,2000,,,
-"Fruit, fresh nes",fruitnes,fruitnes,fruitnes,450000,5000,5000,,,
-"Fruit, pome nes",NA,NA,NA,NA,NA,NA,,,
-"Fruit, stone nes",stonefruitnes,stonefruitnes,stonefruitnes,520000,9000,3000,,,
-"Fruit, tropical fresh nes",tropicalnes,tropicalnes,tropicalnes,410000,5000,7000,,,
-Garlic,garlic,garlic,garlic,1300000,55000,4000,,,
-Ginger,ginger,ginger,ginger,3470000,91000,60000,,,
-Gooseberries,gooseberry,gooseberry,gooseberry,440000,9000,6000,,,
-"Grain, mixed",mixedgrain,mixedgrain,mixedgrain,3400000,80000,15000,,,
-Grapefruit (inc. pomelos),grapefruitetc,grapefruitetc,grapefruitetc,160000,3000,1000,,,
-Grapes,grape,grape,grape,530000,5000,4000,,,
-NA,grassnes,NA,NA,NA,NA,NA,,,
-"Groundnuts, with shell",groundnut,groundnut,groundnut,4140000,187000,359000,,,
-NA,gums,NA,NA,NA,NA,NA,,,
-"Hazelnuts, with shell",hazelnut,hazelnut,hazelnut,2910000,60000,288000,,,
-Hemp tow waste,hemp,hemp,NA,NA,NA,NA,Same species,Avoid double counting,
-Hempseed,hempseed,hemp,hempseed,8840000,0,1000000,,,Nutrients from OIL OF HEMPSEED
-Hops,hop,hop,hop,NA,NA,NA,,,
-Jojoba seed,NA,NA,NA,NA,NA,NA,,,
-Jute,jute,jute,jute,NA,NA,NA,,,
-NA,kapokfiber,kapok,NA,NA,NA,NA,Same species,Avoid double counting,
-Kapok fruit,NA,kapok,NA,NA,NA,NA,Same species,Avoid double counting,
-NA,kapokseed,kapok,kapokseed,8840000,0,1000000,,,Nutrients from OIL OF KAPOK
-Karite nuts (sheanuts),karite,karite,karite,5790000,68000,490000,,,
-Kiwi fruit,kiwi,kiwi,kiwi,520000,9000,4000,,,
-Kola nuts,kolanut,kolanut,kolanut,3490000,90000,20000,,,
-NA,legumenes,NA,NA,NA,NA,NA,,,
-"Leeks, other alliaceous vegetables",NA,NA,NA,NA,NA,NA,,,
-Lemons and limes,lemonlime,lemonlime,lemonlime,150000,6000,2000,,,
-Lentils,lentil,lentil,lentil,3460000,242000,18000,,,
-Lettuce and chicory,lettuce,lettuce,lettuce,120000,11000,2000,,,Nutrients from LETTUCE
-Linseed,linseed,linseed,linseed,4980000,180000,340000,,,
-Lupins,lupin,lupin,lupin,3900000,400000,130000,,,
-Maize,maize,maize,maize,3560000,95000,43000,,,
-NA,maizefor,maize,NA,NA,NA,NA,Same species,Avoid double counting,
-"Maize, green",NA,maize,NA,NA,NA,NA,Same species,Avoid double counting,
-NA,greencorn,maize,NA,NA,NA,NA,Same species,Avoid double counting,
-NA,popcorn,maize,NA,NA,NA,NA,Same species,Avoid double counting,
-"Mangoes, mangosteens, guavas",mango,mango,mango,450000,4000,2000,,,
-Manila fibre (abaca),abaca,abaca,abaca,NA,NA,NA,,,
-Maté,mate,mate,mate,400000,100000,0,,,
-"Melons, other (inc.cantaloupes)",melonetc,melonetc,melonetc,170000,4000,1000,,,Nutrients from MELONS
-Melonseed,melonseed,melonetc,NA,4000000,182000,339000,Same species,Avoid double counting,
-Millet,millet,millet,millet,3400000,97000,30000,,,
-NA,mixedgrass,NA,NA,NA,NA,NA,,,
-Mushrooms and truffles,mushroom,NA,NA,NA,NA,NA,Only plants considered,,
-Mustard seed,mustard,mustard,mustard,4690000,249000,288000,,,
-"Nutmeg, mace and cardamoms",nutmeg,nutmeg,nutmeg,5250000,58000,363000,,,Nutrients from NUTMEG
-"Nuts, nes",nutnes,nutnes,nutnes,2620000,70000,250000,,,
-Oats,oats,oats,oats,3850000,130000,75000,,,
-Oil palm fruit,oilpalm,oilpalm,oilpalm,1580000,3000,132000,,,
-NA,oilseedfor,NA,NA,NA,NA,NA,,,
-Oilseeds nes,oilseednes,oilseednes,oilseednes,3870000,147000,317000,,,
-Okra,okra,okra,okra,310000,16000,3000,,,
-Olives,olive,olive,olive,1750000,13000,175000,,,
-"Onions, dry",onion,onion,NA,NA,NA,NA,Same species,Avoid double counting,
-"Onions, shallots, green",greenonion,onion,greenonion,240000,17000,1000,,,
-Oranges,orange,orange,orange,340000,7000,1000,,,
-Papayas,papaya,papaya,papaya,260000,4000,1000,,,
-Peaches and nectarines,peachetc,peachetc,peachetc,330000,5000,1000,,,
-Pears,pear,pear,pear,540000,4000,4000,,,
-"Peas, dry",pea,pea,NA,NA,NA,NA,Same species,Avoid double counting,
-"Peas, green",greenpea,pea,greenpea,310000,21000,2000,,,
-Pepper (piper spp.),pepper,pepper,pepper,2760000,107000,27000,,,Nutrients from PEPPER WHITE/LONG/BLACK
-Peppermint,peppermint,peppermint,peppermint,NA,NA,NA,,,
-Persimmons,persimmon,persimmon,persimmon,820000,6000,3000,,,
-Pigeon peas,pigeonpea,pigeonpea,pigeonpea,3430000,209000,17000,,,
-Pineapples,pineapple,pineapple,pineapple,260000,2000,2000,,,
-Pistachios,pistachio,pistachio,pistachio,2890000,103000,242000,,,
-Plantains and others,plantain,plantain,plantain,750000,8000,3000,,,
-Plums and sloes,plum,plum,plum,520000,7000,6000,,,Nutrients from PLUMS
-Poppy seed,poppy,poppy,poppy,5330000,180000,447000,,,
-Potatoes,potato,potato,potato,670000,16000,1000,,,
-"Pulses, nes",pulsenes,pulsenes,pulsenes,3400000,220000,20000,,,
-"Pulses,Total",NA,NA,NA,NA,NA,NA,,,
-"Pumpkins, squash and gourds",pumpkinetc,pumpkinetc,pumpkinetc,190000,9000,1000,,,
-"Pyrethrum, dried",pyrethrum,pyrethrum,pyrethrum,NA,NA,NA,,,
-Quinces,quince,quince,quince,350000,2000,1000,,,
-Quinoa,quinoa,quinoa,quinoa,3420000,120000,50000,,,
-Ramie,ramie,ramie,ramie,NA,NA,NA,,,
-Rapeseed,rapeseed,rapeseed,rapeseed,4940000,196000,450000,,,
-Raspberries,rasberry,rasberry,rasberry,470000,9000,5000,,,
-"Rice, paddy",rice,rice,rice,2800000,60000,14000,,,
-"Roots and tubers, nes",rootnes,rootnes,rootnes,910000,16000,2000,,,
-"Roots and Tubers,Total",NA,NA,NA,NA,NA,NA,,,
-"Rubber, natural",rubber,rubber,rubber,NA,NA,NA,,,
-Rye,rye,rye,rye,3190000,110000,19000,,,
-NA,ryefor,NA,NA,NA,NA,NA,,,
-Safflower seed,safflower,safflower,safflower,3140000,97000,303000,,,Nutrients from SAFFLOWER
-Seed cotton,cotton,cotton,cotton,2530000,173000,179000,,,
-Sesame seed,sesame,sesame,sesame,5730000,177000,497000,,,
-Sisal,sisal,sisal,sisal,NA,NA,NA,,,
-Sorghum,sorghum,sorghum,sorghum,3430000,101000,33000,,,
-NA,sorghumfor,sorghum,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,
-Soybeans,soybean,soybean,soybean,3350000,380000,180000,,,
-"Spices, nes",spicenes,spicenes,spicenes,3370000,113000,155000,,,
-Spinach,spinach,spinach,spinach,160000,21000,3000,,,
-Strawberries,strawberry,strawberry,strawberry,280000,6000,4000,,,
-String beans,stringbean,bean,NA,270000,16000,1000,"multiple species, discrimination not possible",Avoid double counting,
-Sugar beet,sugarbeet,sugarbeet,sugarbeet,700000,13000,1000,,,
-Sugar cane,sugarcane,sugarcane,sugarcane,300000,2000,0,,,
-"Sugar crops, nes",sugarnes,sugarnes,sugarnes,3900000,0,0,,,
-Sunflower seed,sunflower,sunflower,sunflower,3080000,123000,268000,,,
-NA,swedefor,rapeseed,rapeseed,4940000,196000,450000,"Same species, but different varieties",,Nutrients from RAPESEED
-Sweet potatoes,sweetpotato,sweetpotato,sweetpotato,920000,7000,2000,,,
-Tallowtree seed,NA,NA,NA,NA,NA,NA,,,
-"Tangerines, mandarins, clementines, satsumas",tangetc,tangetc,tangetc,320000,5000,1000,,,
-Taro (cocoyam),taro,taro,taro,860000,15000,2000,,,
-Tea,tea,tea,tea,400000,100000,0,,,
-"Tobacco, unmanufactured",tobacco,tobacco,tobacco,NA,NA,NA,,,
-Tomatoes,tomato,tomato,tomato,170000,8000,2000,,,
-"Treenuts,Total",NA,NA,NA,NA,NA,NA,,,
-Triticale,triticale,triticale,triticale,3270000,116000,21000,,,
-Tung nuts,tung,tung,tung,8840000,0,1000000,,,Nutrients from TUNG OIL
-NA,turnipfor,NA,NA,NA,NA,NA,,,
-Vanilla,vanilla,vanilla,vanilla,NA,NA,NA,,,
-Vegetables Primary,NA,NA,NA,NA,NA,NA,,,
-"Vegetables, fresh nes",vegetablenes,vegetablenes,vegetablenes,220000,14000,2000,,,
-NA,vegfor,NA,NA,NA,NA,NA,,,
-"Vegetables, leguminous nes",greenbroadbean,greenbroadbean,greenbroadbean,230000,23000,1000,,,"Nutrients from BROAD BEANS,GREEN"
-Vetches,vetch,vetch,vetch,3250000,315000,19000,,,
-"Walnuts, with shell",walnut,walnut,walnut,2890000,64000,278000,,,
-Watermelons,watermelon,watermelon,watermelon,170000,3000,2000,,,
-Wheat,wheat,wheat,wheat,3340000,122000,23000,,,
-Yams,yam,yam,yam,1010000,13000,2000,,,
-Yautia (cocoyam),yautia,yautia,yautia,1090000,17000,3000,,,
+Monfreda2008,harvestedAreaFAO,Group1,Group2,Calories,Protein,Fat,Considerations1,Considerations2,Considerations3,FoodGroup,GrowthLength,GrowthStructure
+abaca,Manila fibre (abaca),abaca,abaca,NA,NA,NA,,,,fiber,perennial,shrub
+agave,Agave fibres nes,agave,agave,NA,NA,NA,,,,fiber,perennial,shrub
+alfalfa,NA,NA,NA,NA,NA,NA,,,,forage,perennial,herbaceous
+almond,"Almonds, with shell",almond,almond,2360000,80000,209000,,,,tree nuts,perennial,tree
+aniseetc,"Anise, badian, fennel, coriander",aniseetc,aniseetc,3450000,158000,149000,,,,other,annual,herbaceous
+apple,Apples,apple,apple,480000,1000,3000,,,,fruit,perennial,tree
+apricot,Apricots,apricot,apricot,450000,13000,4000,,,,fruit,perennial,tree
+areca,Areca nuts,areca,areca,2450000,49000,44000,,,,other,perennial,tree
+artichoke,Artichokes,artichoke,artichoke,200000,11000,1000,,,,vegetables and melons,annual,herbaceous
+asparagus,Asparagus,asparagus,asparagus,120000,16000,1000,,,,vegetables and melons,annual,herbaceous
+avocado,Avocados,avocado,avocado,1190000,15000,113000,,,,fruit,perennial,tree
+bambara,Bambara beans,bambara,bambara,3650000,177000,63000,,,,pulses,annual,herbaceous
+banana,Bananas,banana,banana,600000,7000,3000,,,,fruit,perennial,shrub
+barley,Barley,barley,barley,3320000,110000,18000,,,,cereals,annual,herbaceous
+bean,"Beans, dry",bean,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,,pulses,annual,herbaceous
+beetfor,NA,sugarbeet,sugarbeet,NA,NA,NA,Same species,,,forage,annual,herbaceous
+berrynes,Berries nes,berrynes,berrynes,NA,NA,NA,,,,fruit,perennial,shrub
+blueberry,Blueberries,blueberry,blueberry,550000,7000,4000,,,,fruit,perennial,shrub
+brazil,"Brazil nuts, with shell",brazil,brazil,3150000,69000,318000,,,,tree nuts,perennial,tree
+broadbean,"Broad beans, horse beans, dry",broadbean,broadbean,230000,23000,1000,,,,pulses,annual,herbaceous
+buckwheat,Buckwheat,buckwheat,buckwheat,3300000,110000,20000,,,,cereals,annual,herbaceous
+cabbage,Cabbages and other brassicas,cabbage,cabbage,190000,10000,1000,,,,vegetables and melons,annual,herbaceous
+cabbagefor,NA,cabbage,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,,forage,annual,herbaceous
+canaryseed,Canary seed,canaryseed,canaryseed,3880000,160000,60000,,,,cereals,annual,herbaceous
+carob,Carobs,carob,carob,1110000,16000,5000,,,,fruit,perennial,tree
+carrot,Carrots and turnips,carrot,carrot,380000,9000,2000,,,,vegetables and melons,annual,herbaceous
+carrotfor,NA,carrot,NA,NA,NA,NA,Same species,Avoid double counting,,forage,annual,herbaceous
+cashew,"Cashew nuts, with shell",cashew,cashew,2520000,77000,206000,,,,tree nuts,perennial,tree
+cashewapple,Cashewapple,cashew,NA,430000,8000,6000,Same species,Avoid double counting,,fruit,perennial,tree
+cassava,Cassava,cassava,cassava,1090000,9000,2000,,,,roots and tubers,annual,herbaceous
+castor,Castor oil seed,castor,castor,8840000,0,1000000,,,,oil crops,annual,herbaceous
+cauliflower,Cauliflowers and broccoli,cauliflower,cauliflower,90000,8000,1000,,,,vegetables and melons,annual,herbaceous
+cerealnes,"Cereals, nes",cerealnes,cerealnes,3400000,80000,15000,,,,cereals,annual,herbaceous
+cherry,Cherries,cherry,cherry,650000,11000,9000,,,,fruit,perennial,tree
+chestnut,Chestnut,chestnut,chestnut,1580000,18000,17000,,,,tree nuts,perennial,tree
+chickpea,Chick peas,chickpea,chickpea,3580000,201000,45000,,,,pulses,annual,herbaceous
+chicory,Chicory roots,chicory,chicory,600000,11000,2000,,,,other,annual,herbaceous
+chilleetc,"Chillies and peppers, dry",chilleetc,NA,NA,NA,NA,Same species,Avoid double counting,,vegetables and melons,annual,herbaceous
+cinnamon,Cinnamon (canella),cinnamon,cinnamon,2610000,39000,32000,,,,other,perennial,tree
+citrusnes,"Fruit, citrus nes",citrusnes,citrusnes,260000,5000,2000,,,,fruit,perennial,tree
+clove,Cloves,clove,clove,3230000,60000,201000,,,,other,perennial,tree
+clover,NA,NA,NA,NA,NA,NA,,,,forage,perennial,herbaceous
+cocoa,"Cocoa, beans",cocoa,cocoa,4140000,40000,400000,,,,other,perennial,shrub
+coconut,Coconuts,coconut,coconut,1840000,17000,174000,,,,oil crops,perennial,tree
+coffee,"Coffee, green",coffee,coffee,470000,67000,0,,,,other,perennial,shrub
+coir,NA,coconut,NA,NA,NA,NA,Same species,Avoid double counting,,NA,NA,NA
+cotton,Seed cotton,cotton,cotton,2530000,173000,179000,,,,fiber,annual,herbaceous
+cowpea,"Cow peas, dry",cowpea,cowpea,3420000,234000,18000,,,,pulses,annual,herbaceous
+cranberry,Cranberries,cranberry,cranberry,470000,4000,2000,,,,fruit,perennial,shrub
+cucumberetc,Cucumbers and gherkins,cucumberetc,cucumberetc,130000,5000,1000,,,,vegetables and melons,annual,herbaceous
+currant,Currants,currant,currant,590000,14000,3000,,,,fruit,perennial,tree
+date,Dates,date,date,1560000,15000,4000,,,,fruit,perennial,tree
+eggplant,Eggplants (aubergines),eggplant,eggplant,210000,9000,1000,,,,vegetables and melons,annual,herbaceous
+fibrenes,Fibre crops nes,fibrenes,fibrenes,NA,NA,NA,,,,fiber,annual,herbaceous
+fig,Figs,fig,fig,730000,8000,3000,,,,fruit,perennial,tree
+flax,Flax fibre and tow,flax,flax,NA,NA,NA,,,,fiber,annual,herbaceous
+fonio,Fonio,fonio,fonio,3380000,80000,30000,,,,cereals,annual,herbaceous
+fornes,NA,NA,NA,NA,NA,NA,,,,forage,annual/perennial,herbaceous
+fruitnes,"Fruit, fresh nes",fruitnes,fruitnes,450000,5000,5000,,,,fruit,perennial,tree
+garlic,Garlic,garlic,garlic,1300000,55000,4000,,,,vegetables and melons,annual,herbaceous
+ginger,Ginger,ginger,ginger,3470000,91000,60000,,,,other,annual,herbaceous
+gooseberry,Gooseberries,gooseberry,gooseberry,440000,9000,6000,,,,fruit,perennial,shrub
+grape,Grapes,grape,grape,530000,5000,4000,,,,fruit,perennial,shrub
+grapefruitetc,Grapefruit (inc. pomelos),grapefruitetc,grapefruitetc,160000,3000,1000,,,,fruit,perennial,tree
+grassnes,NA,NA,NA,NA,NA,NA,,,,forage,annual/perennial,herbaceous
+greenbean,"Beans, green",bean,greenbean,500000,30000,4000,,,,vegetables and melons,annual,herbaceous
+greenbroadbean,"Vegetables, leguminous nes",greenbroadbean,greenbroadbean,230000,23000,1000,,,"Nutrients from BROAD BEANS,GREEN",vegetables and melons,annual,herbaceous
+greencorn,NA,maize,NA,NA,NA,NA,Same species,Avoid double counting,,vegetables and melons,annual,herbaceous
+greenonion,"Onions, shallots, green",onion,greenonion,240000,17000,1000,,,,vegetables and melons,annual,herbaceous
+greenpea,"Peas, green",pea,greenpea,310000,21000,2000,,,,vegetables and melons,annual,herbaceous
+groundnut,"Groundnuts, with shell",groundnut,groundnut,4140000,187000,359000,,,,oil crops,annual,herbaceous
+gums,NA,NA,NA,NA,NA,NA,,,,NA,NA,NA
+hazelnut,"Hazelnuts, with shell",hazelnut,hazelnut,2910000,60000,288000,,,,tree nuts,perennial,tree
+hemp,Hemp tow waste,hemp,NA,NA,NA,NA,Same species,Avoid double counting,,fiber,annual,herbaceous
+hempseed,Hempseed,hemp,hempseed,8840000,0,1000000,,,Nutrients from OIL OF HEMPSEED,oil crops,annual,herbaceous
+hop,Hops,hop,hop,NA,NA,NA,,,,other,perennial,shrub
+jute,Jute,jute,jute,NA,NA,NA,,,,fiber,annual,herbaceous
+jutelikefiber,"Bastfibres, other",jutelikefiber,jutelikefiber,NA,NA,NA,,,,fiber,annual,herbaceous
+kapokfiber,NA,kapok,NA,NA,NA,NA,Same species,Avoid double counting,,fiber,perennial,tree
+kapokseed,NA,kapok,kapokseed,8840000,0,1000000,,,Nutrients from OIL OF KAPOK,fiber,perennial,tree
+karite,Karite nuts (sheanuts),karite,karite,5790000,68000,490000,,,,oil crops,perennial,tree
+kiwi,Kiwi fruit,kiwi,kiwi,520000,9000,4000,,,,fruit,perennial,tree
+kolanut,Kola nuts,kolanut,kolanut,3490000,90000,20000,,,,other,perennial,tree
+legumenes,NA,NA,NA,NA,NA,NA,,,,forage,annual/perennial,herbaceous
+lemonlime,Lemons and limes,lemonlime,lemonlime,150000,6000,2000,,,,fruit,perennial,tree
+lentil,Lentils,lentil,lentil,3460000,242000,18000,,,,pulses,annual,herbaceous
+lettuce,Lettuce and chicory,lettuce,lettuce,120000,11000,2000,,,Nutrients from LETTUCE,vegetables and melons,annual,herbaceous
+linseed,Linseed,linseed,linseed,4980000,180000,340000,,,,oil crops,annual,herbaceous
+lupin,Lupins,lupin,lupin,3900000,400000,130000,,,,pulses,annual,herbaceous
+maize,Maize,maize,maize,3560000,95000,43000,,,,cereals,annual,herbaceous
+maizefor,NA,maize,NA,NA,NA,NA,Same species,Avoid double counting,,forage,annual,herbaceous
+mango,"Mangoes, mangosteens, guavas",mango,mango,450000,4000,2000,,,,fruit,perennial,tree
+mate,Maté,mate,mate,400000,100000,0,,,,other,perennial,shrub
+melonetc,"Melons, other (inc.cantaloupes)",melonetc,melonetc,170000,4000,1000,,,Nutrients from MELONS,vegetables and melons,annual,herbaceous
+melonseed,Melonseed,melonetc,NA,4000000,182000,339000,Same species,Avoid double counting,,oil crops,annual,herbaceous
+millet,Millet,millet,millet,3400000,97000,30000,,,,cereals,annual,herbaceous
+mixedgrain,"Grain, mixed",mixedgrain,mixedgrain,3400000,80000,15000,,,,cereals,annual,herbaceous
+mixedgrass,NA,NA,NA,NA,NA,NA,,,,forage,annual/perennial,herbaceous
+mushroom,Mushrooms and truffles,NA,NA,NA,NA,NA,Only plants considered,,,vegetables and melons,annual,herbaceous
+mustard,Mustard seed,mustard,mustard,4690000,249000,288000,,,,oil crops,annual,herbaceous
+nutmeg,"Nutmeg, mace and cardamoms",nutmeg,nutmeg,5250000,58000,363000,,,Nutrients from NUTMEG,other,perennial,shrub
+nutnes,"Nuts, nes",nutnes,nutnes,2620000,70000,250000,,,,tree nuts,perennial,tree
+oats,Oats,oats,oats,3850000,130000,75000,,,,cereals,annual,herbaceous
+oilpalm,Oil palm fruit,oilpalm,oilpalm,1580000,3000,132000,,,,oil crops,perennial,tree
+oilseedfor,NA,NA,NA,NA,NA,NA,,,,forage,annual,herbaceous
+oilseednes,Oilseeds nes,oilseednes,oilseednes,3870000,147000,317000,,,,oil crops,annual,herbaceous
+okra,Okra,okra,okra,310000,16000,3000,,,,vegetables and melons,annual,herbaceous
+olive,Olives,olive,olive,1750000,13000,175000,,,,oil crops,perennial,tree
+onion,"Onions, dry",onion,NA,NA,NA,NA,Same species,Avoid double counting,,vegetables and melons,annual,herbaceous
+orange,Oranges,orange,orange,340000,7000,1000,,,,fruit,perennial,tree
+papaya,Papayas,papaya,papaya,260000,4000,1000,,,,fruit,perennial,tree
+pea,"Peas, dry",pea,NA,NA,NA,NA,Same species,Avoid double counting,,pulses,annual,herbaceous
+peachetc,Peaches and nectarines,peachetc,peachetc,330000,5000,1000,,,,fruit,perennial,tree
+pear,Pears,pear,pear,540000,4000,4000,,,,fruit,perennial,tree
+pepper,Pepper (piper spp.),pepper,pepper,2760000,107000,27000,,,Nutrients from PEPPER WHITE/LONG/BLACK,other,perennial,shrub
+peppermint,Peppermint,peppermint,peppermint,NA,NA,NA,,,,other,perennial,herbaceous
+persimmon,Persimmons,persimmon,persimmon,820000,6000,3000,,,,fruit,perennial,tree
+pigeonpea,Pigeon peas,pigeonpea,pigeonpea,3430000,209000,17000,,,,pulses,annual,herbaceous
+pimento,"Chillies and peppers, green",chilleetc,pimento,250000,11000,3000,,,,other,annual,herbaceous
+pineapple,Pineapples,pineapple,pineapple,260000,2000,2000,,,,fruit,perennial,shrub
+pistachio,Pistachios,pistachio,pistachio,2890000,103000,242000,,,,tree nuts,perennial,tree
+plantain,Plantains and others,plantain,plantain,750000,8000,3000,,,,fruit,perennial,shrub
+plum,Plums and sloes,plum,plum,520000,7000,6000,,,Nutrients from PLUMS,fruit,perennial,tree
+popcorn,NA,maize,NA,NA,NA,NA,Same species,Avoid double counting,,NA,NA,NA
+poppy,Poppy seed,poppy,poppy,5330000,180000,447000,,,,oil crops,annual,herbaceous
+potato,Potatoes,potato,potato,670000,16000,1000,,,,roots and tubers,annual,herbaceous
+pulsenes,"Pulses, nes",pulsenes,pulsenes,3400000,220000,20000,,,,pulses,annual,herbaceous
+pumpkinetc,"Pumpkins, squash and gourds",pumpkinetc,pumpkinetc,190000,9000,1000,,,,vegetables and melons,annual,herbaceous
+pyrethrum,"Pyrethrum, dried",pyrethrum,pyrethrum,NA,NA,NA,,,,other,perennial,shrub
+quince,Quinces,quince,quince,350000,2000,1000,,,,fruit,perennial,tree
+quinoa,Quinoa,quinoa,quinoa,3420000,120000,50000,,,,cereals,annual,herbaceous
+ramie,Ramie,ramie,ramie,NA,NA,NA,,,,fiber,perennial,shrub
+rapeseed,Rapeseed,rapeseed,rapeseed,4940000,196000,450000,,,,oil crops,annual,herbaceous
+rasberry,Raspberries,rasberry,rasberry,470000,9000,5000,,,,fruit,perennial,shrub
+rice,"Rice, paddy",rice,rice,2800000,60000,14000,,,,cereals,annual,herbaceous
+rootnes,"Roots and tubers, nes",rootnes,rootnes,910000,16000,2000,,,,roots and tubers,annual,herbaceous
+rubber,"Rubber, natural",rubber,rubber,NA,NA,NA,,,,other,perennial,tree
+rye,Rye,rye,rye,3190000,110000,19000,,,,cereals,annual,herbaceous
+ryefor,NA,NA,NA,NA,NA,NA,,,,forage,annual/perennial,herbaceous
+safflower,Safflower seed,safflower,safflower,3140000,97000,303000,,,Nutrients from SAFFLOWER,oil crops,annual,herbaceous
+sesame,Sesame seed,sesame,sesame,5730000,177000,497000,,,,oil crops,annual,herbaceous
+sisal,Sisal,sisal,sisal,NA,NA,NA,,,,fiber,perennial,shrub
+sorghum,Sorghum,sorghum,sorghum,3430000,101000,33000,,,,cereals,annual,herbaceous
+sorghumfor,NA,sorghum,NA,NA,NA,NA,"multiple species, discrimination not possible",Avoid double counting,,forage,annual,herbaceous
+sourcherry,"Cherries, sour",sourcherry,sourcherry,450000,9000,3000,,,,fruit,perennial,tree
+soybean,Soybeans,soybean,soybean,3350000,380000,180000,,,,oil crops,annual,herbaceous
+spicenes,"Spices, nes",spicenes,spicenes,3370000,113000,155000,,,,other,perennial,tree
+spinach,Spinach,spinach,spinach,160000,21000,3000,,,,vegetables and melons,annual,herbaceous
+stonefruitnes,"Fruit, stone nes",stonefruitnes,stonefruitnes,520000,9000,3000,,,,fruit,perennial,tree
+strawberry,Strawberries,strawberry,strawberry,280000,6000,4000,,,,fruit,perennial,shrub
+stringbean,String beans,bean,NA,270000,16000,1000,"multiple species, discrimination not possible",Avoid double counting,,vegetables and melons,annual,herbaceous
+sugarbeet,Sugar beet,sugarbeet,sugarbeet,700000,13000,1000,,,,sugar crops,annual,herbaceous
+sugarcane,Sugar cane,sugarcane,sugarcane,300000,2000,0,,,,sugar crops,perennial,herbaceous
+sugarnes,"Sugar crops, nes",sugarnes,sugarnes,3900000,0,0,,,,sugar crops,annual,herbaceous
+sunflower,Sunflower seed,sunflower,sunflower,3080000,123000,268000,,,,oil crops,annual,herbaceous
+swedefor,NA,rapeseed,rapeseed,4940000,196000,450000,"Same species, but different varieties",,Nutrients from RAPESEED,forage,annual,herbaceous
+sweetpotato,Sweet potatoes,sweetpotato,sweetpotato,920000,7000,2000,,,,roots and tubers,annual,herbaceous
+tangetc,"Tangerines, mandarins, clementines, satsumas",tangetc,tangetc,320000,5000,1000,,,,fruit,perennial,tree
+taro,Taro (cocoyam),taro,taro,860000,15000,2000,,,,roots and tubers,annual,herbaceous
+tea,Tea,tea,tea,400000,100000,0,,,,other,perennial,shrub
+tobacco,"Tobacco, unmanufactured",tobacco,tobacco,NA,NA,NA,,,,other,annual,herbaceous
+tomato,Tomatoes,tomato,tomato,170000,8000,2000,,,,vegetables and melons,annual,herbaceous
+triticale,Triticale,triticale,triticale,3270000,116000,21000,,,,cereals,annual,herbaceous
+tropicalnes,"Fruit, tropical fresh nes",tropicalnes,tropicalnes,410000,5000,7000,,,,fruit,perennial,tree
+tung,Tung nuts,tung,tung,8840000,0,1000000,,,Nutrients from TUNG OIL,oil crops,perennial,tree
+turnipfor,NA,NA,NA,NA,NA,NA,,,,forage,annual,herbaceous
+vanilla,Vanilla,vanilla,vanilla,NA,NA,NA,,,,other,perennial,shrub
+vegetablenes,"Vegetables, fresh nes",vegetablenes,vegetablenes,220000,14000,2000,,,,vegetables and melons,annual,herbaceous
+vegfor,NA,NA,NA,NA,NA,NA,,,,forage,annual,herbaceous
+vetch,Vetches,vetch,vetch,3250000,315000,19000,,,,pulses,annual,herbaceous
+walnut,"Walnuts, with shell",walnut,walnut,2890000,64000,278000,,,,tree nuts,perennial,tree
+watermelon,Watermelons,watermelon,watermelon,170000,3000,2000,,,,vegetables and melons,annual,herbaceous
+wheat,Wheat,wheat,wheat,3340000,122000,23000,,,,cereals,annual,herbaceous
+yam,Yams,yam,yam,1010000,13000,2000,,,,roots and tubers,annual,herbaceous
+yautia,Yautia (cocoyam),yautia,yautia,1090000,17000,3000,,,,roots and tubers,annual,herbaceous
+NA,"Leeks, other alliaceous vegetables",NA,leeks,370000,7000,1000,,,,vegetables and melons,annual,herbaceous
+NA,"Fruit, pome nes",NA,pomefruitnes,480000,4000,3000,,,,fruit,perennial,tree
+NA,Kapok fruit,kapok,NA,NA,NA,NA,Same species,Avoid double counting,,NA,NA,NA
+NA,Jojoba seed,NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Coarse Grain, Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Citrus Fruit,Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,Tallowtree seed,NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Maize, green",maize,NA,NA,NA,NA,Same species,Avoid double counting,,NA,NA,NA
+NA,Cassava leaves,cassava,NA,NA,NA,NA,Same species,Avoid double counting,,NA,NA,NA
+NA,Fruit Primary,NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Treenuts,Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,Vegetables Primary,NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,Cereals (Rice Milled Eqv),NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Pulses,Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Cereals,Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
+NA,"Roots and Tubers,Total",NA,NA,NA,NA,NA,,,,NA,NA,NA
