@@ -400,7 +400,7 @@ dfAll <- dfAll[,c("Country","timePeriod",
                   "yieldAsynchrony","productionAsynchrony",
                   "richness","diversity","nitrogen","nitrogen_ha","irrigation","irrigation_share",
                   "instabilityTemp","instabilityPrec","warfare")]
-write.csv(dfAll, "datasetsDerived/dataFinal_global_feb2020.csv",row.names=F)
+write.csv(dfAll, "datasetsDerived/dataFinal_global_Feb2020.csv",row.names=F)
 
 
 rm(list=ls())

@@ -31,6 +31,10 @@ length(unique(dfGlobal$Country)) # 136 countries
 
 names(dfGlobal)
 
+### correlatons
+cor.test(dfGlobal$productionStability,dfGlobal$yieldStability,method='s')
+
+
 #### 1: explore realtionship between diversity and asynchrony
 dfDiversityAsynchronyGlobal <- dfGlobal[,c("Country","timePeriod","productionAsynchrony","diversity")]
 names(dfDiversityAsynchronyGlobal)[3] <- "asynchrony"
