@@ -23,11 +23,12 @@ dfGlobal <- read.csv("datasetsDerived/dataFinal_global_feb2020.csv")
 names(dfGlobal)
 
 
-## only keep countries with at least 5 crops as asynchrony is more meaningful here 
-dfGlobal <- dfGlobal[which(dfGlobal$richness>=5),]
+## check minimum richness (should be at least 2 for asynchrony to be meaningful)
+min(dfGlobal$richness)
 
 nrow(dfGlobal) # 590 data points
 length(unique(dfGlobal$Country)) # 136 countries
+
 names(dfGlobal)
 
 #### 1: explore realtionship between diversity and asynchrony
@@ -41,7 +42,7 @@ cor.test(dfDiversityAsynchronyGlobal$diversity,dfDiversityAsynchronyGlobal$async
 modDiversityTimeGlobal <- lmer(asynchrony ~ diversity + (1+diversity|timePeriod), data = dfDiversityAsynchronyGlobal)
 modDiversityLMGlobal <- lm(asynchrony ~ diversity,data = dfDiversityAsynchronyGlobal)
 summary(modDiversityLMGlobal)
-anova(modDiversityTimeGlobal,modDiversityLMGlobal)  # AIC: -321.42, -325.83
+anova(modDiversityTimeGlobal,modDiversityLMGlobal)  # AIC: -336.59, -340.22
 
 modDiversityTimeFixedGlobal=fixef(modDiversityTimeGlobal)
 r.squaredGLMM(modDiversityTimeGlobal) 
@@ -53,7 +54,7 @@ a1 <- ggplot(dfDiversityAsynchronyGlobal, aes(x=diversity, y=asynchrony, color =
   scale_colour_manual(name="Time interval",values = vecColors, labels = c("1961-1970","1971-1980","1981-1990","1991-2000","2001-2010")) +
   scale_radius(range = c(2,12)) +
   geom_abline(intercept = modDiversityTimeGroupGlobal[,1],slope = modDiversityTimeGroupGlobal[,2],color=vecColors)+
-  geom_abline(intercept = summary(modDiversityLMGlobal)$coefficients[1,1],slope = summary(modDiversityLMGlobal)$coefficients[2,1],color="black",linetype=3)+
+  # geom_abline(intercept = summary(modDiversityLMGlobal)$coefficients[1,1],slope = summary(modDiversityLMGlobal)$coefficients[2,1],color="black",linetype=3)+
   theme_classic() +  
   xlab("Diversity") +
   ylab("Asynchrony") + 
@@ -92,19 +93,20 @@ cor(dfCenterGlobal$diversity,dfCenterGlobal$asynchrony)
 
 # models
 modAsynchronyGlobal <- lm(stability~asynchrony+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modAsynchronyGlobal) # R2: 0.594
-AIC(modAsynchronyGlobal) # AIC: 825.2914
+summary(modAsynchronyGlobal) # R2: 0.6002
+AIC(modAsynchronyGlobal) # AIC: 815.5752
 vif(modAsynchronyGlobal) # vif < 2
 
 modDiversityGlobal <- lm(stability~diversity+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modDiversityGlobal) # R2: 0.2665
-AIC(modDiversityGlobal) # AIC: 1174.215
+summary(modDiversityGlobal) # 0.271
+AIC(modDiversityGlobal) # AIC: 1169.947
 vif(modDiversityGlobal) # vif < 2
 
 modTotalGlobal <- lm(stability~diversity+asynchrony+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modTotalGlobal) # R2: 0.6102
-AIC(modTotalGlobal) # AIC: 803.2709
+summary(modTotalGlobal) # R2: 0.6152
+AIC(modTotalGlobal) # AIC: 794.9665
 vif(modTotalGlobal) # vif < 2
+
 
 # check colinearity using both orders
 modTotalD <- lm(stability~diversity+asynchrony+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
@@ -112,8 +114,8 @@ modTotalA <- lm(stability~asynchrony+diversity+irrigation+nitrogen+warfare+timeP
 
 anovaD <- anova(modTotalD)
 anovaA <- anova(modTotalA)
-# asynchrony: F(1,589) = 656.1636 , P < 0.05; F(1,589) = 726.0135, P < 0.05
-# diversity : F(1,589) =  83.5167, P < 0.05; F(1,589) =  13.6668, P < 0.05
+# asynchrony: F(1,589) = 656.0851 , P < 0.05; F(1,589) = 745.3855, P < 0.05
+# diversity : F(1,589) =  99.9246, P < 0.05; F(1,589) =  10.6241, P < 0.05
 
 ## barplot of effects: combine coefficents of both modesl
 dfDiversity <- data.frame(summary(modDiversityGlobal)$coefficients)[2:8,c(1,2,4)]
@@ -263,7 +265,7 @@ dfProdProp$productionProp <- (dfProdProp$production/(sum(dfProdProp$production))
 
 dfLow <- dfProdProp[which(dfProdProp$productionAsynchrony<trintAsynchrony[2]&dfProdProp$productionStability<trintStability[2]),]
 dfLowFinal <- dfLow[order(dfLow$productionProp,decreasing = T),c("Country","productionProp")]
-dfLowFinal$sum <- cumsum(dfLowFinal$productionProp) # Russia, Argentinia and Australia are the highest unstable contributors; totally 30 countries contribute to 11.68% of global calorie production
+dfLowFinal$sum <- cumsum(dfLowFinal$productionProp) # Russia, Argentinia and Australia (total 6.870877% contribution) are the highest unstable contributors; totally 29 countries contribute to 11.785819% of global calorie production
 
 # dfMedium <- dfProdProp[which(dfProdProp$productionAsynchrony>trintAsynchrony[2]&dfProdProp$productionAsynchrony<trintAsynchrony[3]&dfProdProp$productionStability>trintStability[2]&dfProdProp$productionStability<trintStability[3]),]
 # dfMediumFinal <- dfMedium[order(dfMedium$productionProp,decreasing = T),c("Area","productionProp")]
@@ -349,7 +351,7 @@ funPlot <- function(predictor,predictorOrig,trans,xlabel,ylabel,modD,modA, posX,
 a <- funPlot(predictor="diversity",predictorOrig="diversity",trans="",xlabel="Diversity",ylabel=expression(paste("Production stability (",mu,"/",sigma,")")),modD=T,modA=F,posX=-9999,posY=-9999)
 b <- funPlot(predictor = "asynchrony", predictorOrig ="productionAsynchrony",trans="",xlabel="Asynchrony",ylabel="",modD=F,modA=T,posX=-9999,posY=-9999)
 c <- funPlot(predictor="irrigation",predictorOrig="irrigation_share",trans="sqrt",xlabel="Irrigation (%)",ylabel="",modD=T,modA=T,posX=-9999,posY=-9999)
-d <- funPlot(predictor="nitrogen",predictorOrig="nitrogen_ha",trans="sqrt",xlabel="N use intensity",ylabel=expression(paste("Production stability (",mu,"/",sigma,")")),modD=T,modA=T,posX=-9999,posY=-9999)
+d <- funPlot(predictor="nitrogen",predictorOrig="nitrogen_ha",trans="sqrt",xlabel="N use intensity (t/ha)",ylabel=expression(paste("Production stability (",mu,"/",sigma,")")),modD=T,modA=T,posX=-9999,posY=-9999)
 e <- funPlot(predictor="instabilityTemp",predictorOrig="instabilityTemp",trans="",xlabel=expression(paste("Temperature instability (-(",mu,"/",sigma,"))")),ylabel="",modD=T,modA=T,posX=-9999,posY=-9999)
 f <- funPlot(predictor="instabilityPrec",predictorOrig="instabilityPrec",trans="",xlabel=expression(paste("Precipitation instability (-(",mu,"/",sigma,"))")),ylabel="",modD=T,modA=T,posX=-9999,posY=-9999)
 g <- funPlot(predictor="warfare",predictorOrig="warfare",trans="",xlabel="Warfare",ylabel=expression(paste("Production stability (",mu,"/",sigma,")")),modD=T,modA=T,posX=-9999,posY=-9999)
@@ -399,7 +401,7 @@ dfTotal[indLow,4] <- "<0.0001"
 
 dfFinalTable <- cbind(dfDiversity[,c(1,3,4)],dfAsynchrony[,c(1,3,4)],dfTotal[,c(1,3,4)])
 
-write.csv(dfFinalTable,"results/ExtendedDataTable2_Feb2020.csv")
+write.csv(dfFinalTable,"results/ExtendedDataTable1_Feb2020.csv")
 
 
 

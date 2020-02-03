@@ -12,8 +12,11 @@ levelMap <- getMap()
 plot(levelMap)
 vecLevel <- levelMap@data$ISO3 
 
-#### cropland data
+#### cropland data in focal time period
 dfCropland <- read.csv("datasets/cropland_global.csv")
+dfCropland <- dfCropland[which(dfCropland$Year%in%1961:2010),]
+
+
 # adapt region names
 dfCropland$Level <- countrycode(dfCropland$Area, 'country.name', 'iso3c') # Swaziland missing
 levels(dfCropland$Area) <- c(levels(dfCropland$Area),"Swaziland")
@@ -37,7 +40,7 @@ dfCroplandMean <- dfCroplandMean[order(dfCroplandMean$propArea,decreasing = T),]
 dfCroplandMean$cumArea <- cumsum(dfCroplandMean$propArea)
 ind <- which(dfCroplandMean$cumArea>=0.999)[1]
 dfCropland <- dfCropland[which(dfCropland$Level%in%dfCroplandMean[1:ind,"Level"]),] # this are the target regions
-vecLevel <- unique(dfCropland$Level)
+vecLevel <- unique(dfCropland$Level) ## target countries
 nrow(unique(dfCropland[,c("Level","Year")])) == nrow(dfCropland) # check duplicates
 
 
@@ -78,29 +81,25 @@ dfProduction <- dfProduction[which(!is.na(dfProduction$AreaHarvested) & !is.na(d
 # remove zero areas and production
 dfProduction <- dfProduction[-which(dfProduction$AreaHarvested==0 |  dfProduction$Production==0),]
 
-# add calories and make crops consistent with target crop file
-dfCalories <- read.csv("datasets/targetCrops_global.csv")
-head(dfCalories) # Group2 is the target crop name
-names(dfCalories)[2] <- "Item"
-dfCalories <- dfCalories[which(!is.na(dfCalories$Group2)&!is.na(dfCalories$Calories)),]
-setdiff(dfProduction$Item,dfCalories$Item)
+## add calories and make crops consistent with target crop file
+dfCalories <- read.csv("datasets/cropCalories_global.csv")
+head(dfCalories) 
+dfCalories <- dfCalories[which(!is.na(dfCalories$Calories_kcal_t)),]
+setdiff(dfProduction$Item,dfCalories$Item) # missing calorie values
 
 # subset crops without calories
-dfProduction <- merge(dfProduction,dfCalories[,c("Item","Calories")],by="Item")
+dfProduction <- merge(dfProduction,dfCalories[,c("Item","Calories_kcal_t")],by="Item")
 names(dfProduction)
 
 # change production to calories
-dfProduction$Production <- dfProduction$Production*dfProduction$Calories
+dfProduction$Production <- dfProduction$Production*dfProduction$Calories_kcal_t
 # calculate individual yields and remove very unrealistic values
 dfProduction$Yield <-dfProduction$Production / dfProduction$AreaHarvested
 hist(dfProduction$Yield)
-dfProduction<-dfProduction[dfProduction$Yield<1e+08,]
+# dfProduction<-dfProduction[which(dfProduction$Yield<1e+09),]
 
 # keep necessary columns only 
 dfProduction <- dfProduction[,c("Level","Item","Year","AreaHarvested","Production")]
-
-# Remove Spices, nes and onions dry 
-dfProduction<-dfProduction[-which(dfProduction$Item%in%c("Spices, nes","Onions, dry")),]
 
 # only keep crops with 10 entries per time period
 dfProduction$timePeriod=0
@@ -117,11 +116,14 @@ head(dfCount)
 
 dfProduction <- merge(dfProduction[,c("Level","Item","Year","AreaHarvested","Production","timePeriod")],dfCount)
 dfProduction <- dfProduction[which(dfProduction$sum==10),c("Level","Item","Year","AreaHarvested","Production")]
-length(unique(dfProduction$Item)) ## 130 crops
+length(unique(dfProduction$Item)) ## 133 crops
+
+# calculate crop specific yields
+dfProduction$Yield <- dfProduction$Production/dfProduction$AreaHarvested
 
 nrow(unique(dfProduction[,c("Level","Year","Item")])) == nrow(dfProduction) # check duplicates
 
-#### calculate yields
+#### calculate overall yields
 sum(is.na(dfProduction))
 dfYield <- aggregate(cbind(Production,AreaHarvested)~Level+Year,dfProduction,sum)
 head(dfYield)
@@ -211,6 +213,7 @@ dfYemenS$Area <- "Yemen"
 dfYemenT <- merge(dfYemenN,dfYemenS,by=c("SCODE","CCODE","Area","YEAR"),all=T)
 head(dfYemenT)
 dfYemenT$ACTOTAL <- rowSums(dfYemenT[,c("ACTOTAL.x","ACTOTAL.y")],na.rm=T)
+# remove formerly divided countries
 dfWarfare <- rbind(dfWarfare[-which(dfWarfare$Area%in%c("Germany East","Germany West","Yemen, North","Yemen, South","Vietnam North","Vietnam South","Vietnam, North","Vietnam, South")),],dfYemenT[,c(1:4,7)])
 
 # replace Russria
@@ -239,7 +242,7 @@ dfClimateID <- merge(dfClimateID,dfClimateIDsum,by="cellID")
 head(dfClimateID)
 
 # climate file
-load("datasetsDerived/climate_global.RData")
+load("datasets/climate_global.RData")
 names(dfClimateFinalPrint)
 head(dfClimateFinalPrint)
 dfClimateFinalPrint <- dfClimateFinalPrint[,c(1:101,116:121)]
@@ -278,7 +281,7 @@ dfClimateFinalAreaAgg <- aggregate(dfClimateFinalArea[,7:106],by=list(dfClimateF
 head(dfClimateFinalAreaAgg)
 names(dfClimateFinalAreaAgg)[1] <- "Area"
 min(dfClimateFinalAreaAgg[2:101]) # check for negative values -> would be problematic for instability calculation
-sum(dfClimateFinalAreaAgg[2:101]<0) 
+sum(dfClimateFinalAreaAgg[2:101]<0) # remove negative values
 dfClimateFinalAreaAgg$neg <- apply(dfClimateFinalAreaAgg[,2:101],1,function(r){sum(r<0)})
 dfClimateFinalAreaAgg <- dfClimateFinalAreaAgg[which(dfClimateFinalAreaAgg$neg==0),1:101]
 
@@ -314,7 +317,7 @@ vecLevelFinal <- Reduce(intersect,list(dfCropland$Level,dfProduction$Level,dfYie
 # remove countries listed by Renard & Tilman 2019
 vecLevelFinal <- vecLevelFinal[-which(vecLevelFinal%in%c("EGY","PRK", "GIN", "KEN","MOZ","ZMB","IRL","NLD","NZL"))] 
 
-dfProduction$Yield <- dfProduction$Production/dfProduction$AreaHarvested
+
 
 ## summarize per time frame 
 lsAll <- lapply(vecLevelFinal,function(reg){
@@ -345,14 +348,15 @@ lsAll <- lapply(vecLevelFinal,function(reg){
       dfSummary$richness <- length(unique(dfProductionLevel$Item))
       dfSummary$diversity <- mean(dfShannonLevel$diversity,na.rm=T)
       
-      
+      ## crop specific detrended yield and production
       for (j in unique(dfProductionLevel$Item))
       {
         dfProductionLevel[which(dfProductionLevel$Item==j),"YieldDet"] = resid(lm(Yield ~ Year^2,data=dfProductionLevel[which(dfProductionLevel$Item==j),]))
         dfProductionLevel[which(dfProductionLevel$Item==j),"ProductionDet"] = resid(lm(Production ~ Year^2,data=dfProductionLevel[which(dfProductionLevel$Item==j),]))
       }      
-      dfSummary$yieldAsynchrony <- 1-synchrony(dfProductionLevel,time.var="Year",species.var="Item",abundance.var="YieldDet") # from codyn library
-      dfSummary$productionAsynchrony <- 1-synchrony(dfProductionLevel,time.var="Year",species.var="Item",abundance.var="ProductionDet") # from codyn library
+      ## asynchrony cacluatioin
+      dfSummary$yieldAsynchrony <- 1-synchrony(dfProductionLevel,time.var="Year",species.var="Item",abundance.var="YieldDet") 
+      dfSummary$productionAsynchrony <- 1-synchrony(dfProductionLevel,time.var="Year",species.var="Item",abundance.var="ProductionDet") 
       
       dfSummary$meanCropland <- mean(dfCroplandLevel$croplandArea,na.rm=T)
       dfSummary$nitrogen <- mean(dfFertilizerLevel$Nitrogen,na.rm=T)
@@ -386,7 +390,8 @@ dfAll <- na.omit(dfAll)
 length(unique(dfAll$Level)) ## 136 countries
 
 ## export commodities
-# write.csv(sort(unique(dfProduction[which(dfProduction$Level%in%unique(dfAll$Level)),"Item"])),"datasetsDerived/crops_feb2020.csv",row.names=F)
+cropsFinal <- sort(as.character(unique(dfProduction[which(dfProduction$Level%in%unique(dfAll$Level)),"Item"])))
+write.csv(data.frame(a=cropsFinal[1:33],b=cropsFinal[34:66],c=cropsFinal[67:99],d=c(cropsFinal[100:131],NA)),"results/SupplementaryTable2_Feb2020.csv",row.names=F)
 
 ## save dataframe
 names(dfAll)[1] <- "Country"
@@ -399,3 +404,4 @@ write.csv(dfAll, "datasetsDerived/dataFinal_global_feb2020.csv",row.names=F)
 
 
 rm(list=ls())
+
