@@ -19,7 +19,7 @@ names(myColors) <- factor(lev,levels=lev)
 ###### Global
 
 ## read DF
-dfGlobal <- read.csv("datasetsDerived/dataFinal_global_feb2020.csv")
+dfGlobal <- read.csv("datasetsDerived/dataFinal_global_June2020.csv")
 names(dfGlobal)
 
 
@@ -178,10 +178,10 @@ b1 <- ggplot(data=dfCombined, aes(x=nam, y=Effect, fill=Model)) +
         legend.text = element_text(size = 8))+
   theme(legend.key.size = unit(0.2,"cm")) +
   theme(plot.margin = unit(c(0.2,0.3,-0.5,0.2), "cm")) 
-  
+
 
 ################# Fig 1: regression results
-jpeg("results/Fig1_Feb2020.jpeg", width = 16.9, height = 16.9*2/3, units = 'cm', res = 600)
+jpeg("results/Fig1_June2020.jpeg", width = 16.9, height = 16.9*2/3, units = 'cm', res = 600)
 
 ggarrange(a1,b1,
           labels = letters[1:2],font.label=list(size=8),
@@ -196,7 +196,7 @@ dev.off()
 ## read shape
 ctryMapOriginal <- readOGR("spatial/countries_global.shp")
 ctryMapOriginal$Country <-  countrycode(ctryMapOriginal$Area, 'country.name', 'iso3c')
-  
+
 ## extract most recent period
 dfGroups <- dfGlobal[which(dfGlobal$timePeriod==2001),]
 sort(as.character(setdiff(dfGroups$Country,ctryMapOriginal$Country)))
@@ -244,7 +244,7 @@ g.legend <- ggplot(grd, aes(dim1,dim2,fill=factor(1:9)))+
 vp<-viewport(width=0.24,height=0.4,x=0.12,y=0.3)
 
 ## plot
-jpeg("results/Fig2_Feb2020.jpeg", width = 8, height = 5, units = 'cm', res = 600)
+jpeg("results/Fig2_June2020.jpeg", width = 8, height = 5, units = 'cm', res = 600)
 
 ggplot() +
   geom_map(data = mapsBivariate, map = mapsBivariate,
@@ -363,7 +363,7 @@ h <- funPlot(predictor="timePeriod",predictorOrig="timePeriod",trans="",xlabel="
 leg <- funPlot(predictor="instabilityPrec",predictorOrig="instabilityPrec",trans="",xlabel="",ylabel="",modD=T,modA=T,posX=0.5,posY=0.5)
 legend <- cowplot::get_legend(leg)
 
-jpeg("results/ExtendedDataFig1_Feb2020.jpeg", width = 16.9, height = 16.9, units = 'cm', res = 600)
+jpeg("results/ExtendedDataFig1_June2020.jpeg", width = 16.9, height = 16.9, units = 'cm', res = 600)
 
 ggarrange(a, b, c, d, e,f,g,h,legend,
           labels = c(letters[1:8]),font.label=list(size=6),
@@ -405,7 +405,7 @@ dfTotal[indLow,4] <- "<0.0001"
 
 dfFinalTable <- cbind(dfDiversity[,c(1,3,4)],dfAsynchrony[,c(1,3,4)],dfTotal[,c(1,3,4)])
 
-write.csv(dfFinalTable,"results/ExtendedDataTable1_Feb2020.csv")
+write.csv(dfFinalTable,"results/ExtendedDataTable1_June2020.csv")
 
 
 funPredRange <- function(predictor,dfPredict,dfCenter,dfLog,dfOriginal,modS,modY,trans,xlabel,ylabel,posX,posY,tStability,tYield){
