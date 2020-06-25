@@ -97,18 +97,18 @@ cor(dfCenterGlobal$diversity,dfCenterGlobal$asynchrony)
 
 # models
 modAsynchronyGlobal <- lm(stability~asynchrony+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modAsynchronyGlobal) # R2: 0.6002
-AIC(modAsynchronyGlobal) # AIC: 815.5752
+summary(modAsynchronyGlobal) # R2: 0.5974
+AIC(modAsynchronyGlobal) # AIC: 819.6671
 vif(modAsynchronyGlobal) # vif < 2
 
 modDiversityGlobal <- lm(stability~diversity+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modDiversityGlobal) # 0.271
-AIC(modDiversityGlobal) # AIC: 1169.947
+summary(modDiversityGlobal) # 0.2757
+AIC(modDiversityGlobal) # AIC: 1166.13
 vif(modDiversityGlobal) # vif < 2
 
 modTotalGlobal <- lm(stability~diversity+asynchrony+irrigation+nitrogen+warfare+timePeriod+instabilityTemp+instabilityPrec,data=dfCenterGlobal)
-summary(modTotalGlobal) # R2: 0.6152
-AIC(modTotalGlobal) # AIC: 794.9665
+summary(modTotalGlobal) # R2: 0.6119
+AIC(modTotalGlobal) # AIC: 800.0929
 vif(modTotalGlobal) # vif < 2
 
 
@@ -118,8 +118,8 @@ modTotalA <- lm(stability~asynchrony+diversity+irrigation+nitrogen+warfare+timeP
 
 anovaD <- anova(modTotalD)
 anovaA <- anova(modTotalA)
-# asynchrony: F(1,589) = 656.0851 , P < 0.05; F(1,589) = 745.3855, P < 0.05
-# diversity : F(1,589) =  99.9246, P < 0.05; F(1,589) =  10.6241, P < 0.05
+# asynchrony: F(1,589) = 650.4092 , P < 0.05; F(1,589) = 738.9372, P < 0.05
+# diversity : F(1,589) =  99.0602, P < 0.05; F(1,589) =  10.5322, P < 0.05
 
 ## barplot of effects: combine coefficents of both modesl
 dfDiversity <- data.frame(summary(modDiversityGlobal)$coefficients)[2:8,c(1,2,4)]
@@ -406,64 +406,6 @@ dfTotal[indLow,4] <- "<0.0001"
 dfFinalTable <- cbind(dfDiversity[,c(1,3,4)],dfAsynchrony[,c(1,3,4)],dfTotal[,c(1,3,4)])
 
 write.csv(dfFinalTable,"results/ExtendedDataTable1_June2020.csv")
-
-
-funPredRange <- function(predictor,dfPredict,dfCenter,dfLog,dfOriginal,modS,modY,trans,xlabel,ylabel,posX,posY,tStability,tYield){
-  
-  dfPredictNew <- dfPredict
-  dfPredictNew[,predictor] <-  seq(min(dfCenter[,predictor]), max(dfCenter[,predictor]), length.out = 1e3)
-  
-  # combined model
-  pred <- exp(data.frame(predict(modS,newdata = dfPredictNew, 
-                                 interval = "confidence")))    
-  
-  if (trans==""){
-    pred$variable <- dfPredictNew[,predictor]*sd(dfLog[,predictor])+mean(dfLog[,predictor])
-    
-  }
-  if (trans=="sqrt"){
-    pred$variable <- (dfPredictNew[,predictor]*sd(dfLog[,predictor])+mean(dfLog[,predictor]))^2
-  }    
-  
-  pred$Model <- factor("Stability",levels=c("Stability","Yield"))
-  
-  
-  predYield <- exp(data.frame(predict(modY,newdata = dfPredictNew, 
-                                      interval = "confidence")))    
-  
-  if (trans==""){
-    predYield$variable <- dfPredictNew[,predictor]*sd(dfLog[,predictor])+mean(dfLog[,predictor])
-    
-  }
-  if (trans=="sqrt"){
-    predYield$variable <- (dfPredictNew[,predictor]*sd(dfLog[,predictor])+mean(dfLog[,predictor]))^2
-  }    
-  
-  predYield$Model <- factor("Yield",levels=c("Stability","Yield"))
-  pred <- rbind(pred,predYield)
-  
-  
-  dfOrig <- data.frame(response=c(min(dfOriginal[,c("slopeStability","slopeYield")]),max(dfOriginal[,c("slopeStability","slopeYield")])))
-  dfOrig$variable <- c(min(dfOriginal[,predictor]),max(dfOriginal[,predictor]))
-  dfOrig$Model <- ""
-  ggplot(data = dfOrig, aes(x = variable, y = response, color=Model)) +
-    # geom_point() +
-    geom_line(data = pred, aes(y = fit,color=Model),size=0.5)+
-    geom_ribbon(data = pred, aes(y = fit, ymin = lwr, ymax = upr, fill = Model), alpha = 0.5,colour=NA) +
-    theme_classic() +
-    theme(axis.title=element_text(size=6),axis.text=element_text(size=6)) +
-    xlab(xlabel)+
-    ylab(ylabel)+
-    ylim(0,5)+
-    scale_colour_manual(name = "Model",values = myColorsModel)+
-    scale_fill_manual(name = "Model",values = myColorsModel)+
-    theme(legend.position = c(posX, posY))+
-    theme(legend.title = element_text(size = 6),
-          legend.text = element_text(size = 6))+    
-    theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), "cm"))+
-    annotate("text", -Inf, Inf, label = tStability,hjust=-0.4,vjust=1.2,color="#4daf4a")+
-    annotate("text", -Inf, Inf, label = tYield,hjust=-2,vjust=1.2,color="#045A8D")
-}
 
 
 rm(list=ls())
