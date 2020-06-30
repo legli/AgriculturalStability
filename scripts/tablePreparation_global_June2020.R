@@ -138,6 +138,16 @@ names(dfShannon)[3] <- "diversity"
 nrow(dfShannon)==nrow(dfYield)
 nrow(unique(dfShannon[,c("Level","Year")])) == nrow(dfShannon) # check duplicates
 
+#### calculate maximum area changes within countres
+dfArea <- aggregate(AreaHarvested~Level+Year,dfProduction,sum)
+dfAreaMin <- aggregate(AreaHarvested~Level,dfArea,min)
+dfAreaMax <- aggregate(AreaHarvested~Level,dfArea,max)
+dfAreaChange <- merge(dfAreaMin,dfAreaMax,by="Level")
+head(dfAreaChange)
+dfAreaChange$ratio <- dfAreaChange$AreaHarvested.y/dfAreaChange$AreaHarvested.x
+hist(dfAreaChange$ratio)
+range(dfAreaChange$ratio)
+
 
 #### Fertilizer data
 dfFertilizerArchive <- read.csv("datasets/fertilizerArchive_global.csv")

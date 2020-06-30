@@ -233,18 +233,21 @@ mapsBivariate = join(mapsBivariate, dfGroupsFinal[,c("id","color")], by="id")
 g.legend <- ggplot(grd, aes(dim1,dim2,fill=factor(1:9)))+
   geom_tile()+
   scale_fill_manual(values=grd$color)+
-  theme_void()+
+  # theme_void()+
   theme(legend.position="none",axis.title=element_text(size=5),
         panel.background=element_blank(),plot.margin=margin(t=10,b=10,l=10))+
   theme(axis.title=element_text(color="black",size=8),
-        axis.title.y = element_text(angle = 90))+
-  labs(x="Asynchrony",y="Stability") 
-# theme(axis.title=element_text(size=8))
+        axis.title.y = element_text(angle = 90),axis.text.y=element_text(angle=90))+
+  labs(x="Asynchrony",y="Stability") +
+  theme(axis.title=element_text(size=8),axis.text=element_text(size=6),
+        axis.ticks = element_blank(),axis.text.x = element_text(vjust = 3),axis.text.y = element_text(vjust = -1))+
+  scale_x_continuous(breaks=c(1,3),labels=c("low","high"))+
+  scale_y_continuous(breaks=c(1,3),labels=c("low","high"))
 
 vp<-viewport(width=0.24,height=0.4,x=0.12,y=0.3)
 
 ## plot
-jpeg("results/Fig2_June2020.jpeg", width = 8, height = 5, units = 'cm', res = 600)
+jpeg("results/Fig2_June2020.jpeg", width = 16.9, height = 10.5625, units = 'cm', res = 600)
 
 ggplot() +
   geom_map(data = mapsBivariate, map = mapsBivariate,
