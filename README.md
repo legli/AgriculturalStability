@@ -1,5 +1,5 @@
 # AgriculturalStability
-Data preparation and analyses to assess the drivers of yield stability.
+Data preparation and analyses to assess the drivers of production stability.
 
 # Structure
 datasets: contains primary (original) datasets
