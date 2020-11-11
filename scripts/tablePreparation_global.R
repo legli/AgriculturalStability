@@ -331,7 +331,7 @@ length(unique(dfAll$Level)) ## 136 countries
 
 ## export commodities
 cropsFinal <- sort(as.character(unique(dfProduction[which(dfProduction$Level%in%unique(dfAll$Level)),"Item"])))
-write.csv(data.frame(a=cropsFinal[1:33],b=cropsFinal[34:66],c=cropsFinal[67:99],d=c(cropsFinal[100:131],NA)),"results/SupplementaryTable2_June2020.csv",row.names=F)
+write.csv(data.frame(a=cropsFinal[1:33],b=cropsFinal[34:66],c=cropsFinal[67:99],d=c(cropsFinal[100:131],NA)),"results/SupplementaryTable2.csv",row.names=F)
 
 ## save dataframe
 names(dfAll)[1] <- "Country"
@@ -340,7 +340,7 @@ dfAll <- dfAll[,c("Country","timePeriod",
                   "yieldAsynchrony","productionAsynchrony",
                   "richness","diversity","nitrogen","nitrogen_ha","irrigation","irrigation_share",
                   "instabilityTemp","instabilityPrec","warfare")]
-write.csv(dfAll, "datasetsDerived/dataFinal_global_June2020.csv",row.names=F)
+write.csv(dfAll, "datasetsDerived/dataFinal_global.csv",row.names=F)
 
 
 rm(list=ls())

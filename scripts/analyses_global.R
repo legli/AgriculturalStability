@@ -19,12 +19,9 @@ names(myColors) <- factor(lev,levels=lev)
 ###### Global
 
 ## read DF
-dfGlobal <- read.csv("datasetsDerived/dataFinal_global_June2020.csv")
+dfGlobal <- read.csv("datasetsDerived/dataFinal_global.csv")
 names(dfGlobal)
 
-
-## check minimum richness (should be at least 2 for asynchrony to be meaningful)
-min(dfGlobal$richness)
 
 nrow(dfGlobal) # 590 data points
 length(unique(dfGlobal$Country)) # 136 countries
@@ -43,7 +40,7 @@ dfDiversityAsynchronyGlobal$timePeriod <- factor(dfDiversityAsynchronyGlobal$tim
 cor.test(dfDiversityAsynchronyGlobal$diversity,dfDiversityAsynchronyGlobal$asynchrony,method='s')
 
 # test if correlation between diversity and asynchrony decreases over time
-modDiversityTimeGlobal <- lmer(asynchrony ~ diversity + (1+diversity|timePeriod), data = dfDiversityAsynchronyGlobal)
+modDiversityTimeGlobal <- lmer(asynchrony ~ diversity + (1+diversity|timePeriod), data = dfDiversityAsynchronyGlobal,REML=F)
 modDiversityLMGlobal <- lm(asynchrony ~ diversity,data = dfDiversityAsynchronyGlobal)
 summary(modDiversityLMGlobal)
 anova(modDiversityTimeGlobal,modDiversityLMGlobal)  # AIC: -336.59, -340.22
@@ -181,7 +178,7 @@ b1 <- ggplot(data=dfCombined, aes(x=nam, y=Effect, fill=Model)) +
 
 
 ################# Fig 1: regression results
-jpeg("results/Fig1_June2020.jpeg", width = 16.9, height = 16.9*2/3, units = 'cm', res = 600)
+pdf("results/Fig1.pdf", width = 7.204724, height = 7.204724*2/3)
 
 ggarrange(a1,b1,
           labels = letters[1:2],font.label=list(size=8),
@@ -247,7 +244,7 @@ g.legend <- ggplot(grd, aes(dim1,dim2,fill=factor(1:9)))+
 vp<-viewport(width=0.24,height=0.4,x=0.12,y=0.3)
 
 ## plot
-jpeg("results/Fig2_June2020.jpeg", width = 16.9, height = 10.5625, units = 'cm', res = 600)
+pdf("results/Fig2.pdf", width = 7.204724, height = 7.204724*0.625)
 
 ggplot() +
   geom_map(data = mapsBivariate, map = mapsBivariate,
@@ -343,15 +340,15 @@ funPlot <- function(predictor,predictorOrig,trans,xlabel,ylabel,modD,modA, posX,
     geom_line(data = pred, aes(y = fit,color=Model),size=0.5)+
     geom_ribbon(data = pred, aes(y = fit, ymin = lwr, ymax = upr, fill = Model), alpha = 0.5,colour=NA) +
     theme_classic() +
-    theme(axis.title=element_text(size=6),axis.text=element_text(size=6)) +
+    theme(axis.title=element_text(size=8),axis.text=element_text(size=8)) +
     xlab(xlabel)+
     ylab(ylabel)+
     ylim(0,110)+
     scale_colour_manual(name = "Model",values = myColors)+
     scale_fill_manual(name = "Model",values = myColors)+
     theme(legend.position = c(posX, posY))+
-    theme(legend.title = element_text(size = 6),
-          legend.text = element_text(size = 6))+    
+    theme(legend.title = element_text(size = 8),
+          legend.text = element_text(size = 8))+    
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), "cm"))
 }
 
@@ -366,10 +363,10 @@ h <- funPlot(predictor="timePeriod",predictorOrig="timePeriod",trans="",xlabel="
 leg <- funPlot(predictor="instabilityPrec",predictorOrig="instabilityPrec",trans="",xlabel="",ylabel="",modD=T,modA=T,posX=0.5,posY=0.5)
 legend <- cowplot::get_legend(leg)
 
-jpeg("results/ExtendedDataFig1_June2020.jpeg", width = 16.9, height = 16.9, units = 'cm', res = 600)
+pdf("results/ExtendedDataFig1.pdf", width = 7.204724, height = 7.204724)
 
 ggarrange(a, b, c, d, e,f,g,h,legend,
-          labels = c(letters[1:8]),font.label=list(size=6),
+          labels = c(letters[1:8]),font.label=list(size=8),
           ncol = 3, nrow = 3,heights = c(1,1))
 
 dev.off()
@@ -408,7 +405,7 @@ dfTotal[indLow,4] <- "<0.0001"
 
 dfFinalTable <- cbind(dfDiversity[,c(1,3,4)],dfAsynchrony[,c(1,3,4)],dfTotal[,c(1,3,4)])
 
-write.csv(dfFinalTable,"results/ExtendedDataTable1_June2020.csv")
+write.csv(dfFinalTable,"results/ExtendedDataTable1.csv")
 
 
 rm(list=ls())
